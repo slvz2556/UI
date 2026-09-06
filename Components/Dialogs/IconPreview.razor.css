@@ -1,0 +1,128 @@
+.slvz-dialog-body {
+    width: calc(100% - 20px);
+    position: relative;
+    justify-self: center;
+    align-self: center;
+    margin-top: 20px;
+    height: fit-content;
+    margin-bottom: 20px;
+    max-width: 400px;
+    max-height: 600px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.header{
+    position:relative;
+    width:100%;
+    height:35px;
+    margin-top:10px;
+    display:inline-block;
+    margin-bottom:20px;
+}
+.close {
+    position: relative;
+    height: 35px;
+    width: 35px;
+    float:left;
+    border-radius: 8px;
+    margin-left: 10px;
+    display: grid;
+}
+.close svg{
+    position:relative;
+    height:15px;
+    width:15px;
+    justify-self:center;
+    align-self:center;
+}
+.header h5 {
+    position: relative;
+    width: calc(100% - 60px);
+    margin-left: 7px;    
+    float: left;
+    font-family: var(--font-light);
+    font-size: var(--font-light-size);
+    color: var(--font-light-color);
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    top:10px;
+    text-overflow: ellipsis;
+}
+
+.list {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    padding: 20px 0 20px 0;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.list::-webkit-scrollbar {
+    display: none;
+}
+
+
+.item {
+    position: relative;
+    width: 100px;
+    margin:5px;
+    height:fit-content;
+    border-radius: 15px;
+}
+.item:active{
+    transform:scale(.99);
+}
+.item img{
+    width:calc(100% - 20px);
+    aspect-ratio:1/1;
+    margin:10px;
+    position:relative;
+    pointer-events:none;
+    mask-size: 80% !important;
+    background-color: var(--btn-default-text-color,black);
+}
+.selected {
+    background: var(--selected-background);
+    box-shadow: var(--boxshadow);
+}
+
+
+
+.buttons{
+    position:relative;
+    height:40px;
+    width:calc(100% - 20px);
+    margin:20px 10px 10px 10px;
+    display:flex;
+    justify-content:space-around;
+}
+.buttons button{
+    border-radius:10px;
+    height:40px;
+    width:calc(50% - 10px);
+    border:none;
+    display:flex;
+    justify-content:safe center;
+    align-content:center;
+}
+.buttons label{
+    position:relative;
+    align-self:center;
+    font-family:var(--font-light);
+    font-size:var(--font-light-size);
+}
+.buttons svg{
+    height:22px;
+    position:relative;
+    width:22px;
+    align-self:center;
+    margin-right:5px;
+}

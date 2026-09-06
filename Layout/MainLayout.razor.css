@@ -1,0 +1,240 @@
+.main{
+    overflow:hidden;
+}
+
+
+/*Header*/
+.header {
+    height: 50px;
+    width: calc(100% - 20px);
+    position: fixed;
+    left: 0;
+    z-index: 10;
+    top: -100px;
+    margin:10px;
+    transition: .4s;
+}
+@media screen and (max-width:800px) {
+    .header {
+        top: 0;
+    }
+}
+
+/*Menu and body*/
+.menu-body {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+    display: none;
+}
+@media screen and (max-width:800px) {
+    .menu-body {
+        min-height:calc(100% - 50px);
+        top:0px;
+    }
+}
+
+/*Menu*/
+#menu {
+    float: left;
+    width: 250px;
+    position: fixed;
+    height: calc(100vh - 50px);
+    transition: .8s;
+    top: 25px;
+    border-radius:15px;
+    display:grid;
+    z-index: 11;
+    white-space: nowrap;
+}
+#menu::-webkit-scrollbar {
+        display: none;
+    }
+
+
+.nav-open{
+    left:25px;
+}
+.nav-close {
+    left: 25px;
+}
+
+.menu {
+    position: relative;
+    float: left;
+    height: calc(100vh - 100px);
+    padding: 30px 0 20px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (max-width:800px) {
+    #menu {
+        height: calc(100vh - 100px);
+        top: 75px;
+    }
+    .nav-close {
+        left: -280px;
+    }
+    .menu {
+        height: calc(100vh - 150px);
+    }
+}
+
+
+
+
+/*nav button*/
+.open-close-menu {
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    top:5px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: grid;
+    left:100%;
+    margin-left:-50px;
+}
+.open-close-menu span {
+    justify-self: center;
+    align-self: center;
+    position: absolute;
+    width: 25px;
+    height: 2px;
+    user-select: none;
+    transition: .5s;
+    border-radius: 5px;
+    background-color:var(--btn-default-text-color);
+}
+.open-close-menu span:nth-child(1) {
+    margin-top: -12px;
+}
+.open-close-menu span:nth-child(2) {
+    /*width: 10px;*/
+    margin-top: 4px;
+}
+.open-close-menu span:nth-child(3) {
+    margin-top: 19px;
+    /*width: 20px;*/
+}
+.hamberger-action{
+}
+.hamberger-action span:nth-child(1) {
+    transform: rotateZ(45deg);
+    margin-top: 1px;
+}
+.hamberger-action span:nth-child(2) {
+    width: 10px;
+    transform: rotateZ(-45deg);
+    margin-top: 14px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    margin-left: -11px;    
+}
+.hamberger-action span:nth-child(3) {
+    width: 10px;
+    transform: rotateZ(-45deg);
+    margin-top: -10px;
+    margin-left: 12px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+
+
+#black-layer{
+    position:absolute;
+    height:0;
+    width:0;
+    top:0;
+    left:0;
+    z-index:9;
+    background-color:rgba(0,0,0,0.05);
+    backdrop-filter:blur(10px);
+    display:none;
+}
+@media screen and (max-width:800px) {
+    #black-layer {        
+        height: 100%;
+        width: 100%;
+    }
+}
+
+
+.body {
+    position: relative;
+    width: calc(100% - 290px);
+    height:fit-content;
+    transform:translateX(290px);
+    display:inline-block;
+}
+@media screen and (max-width:800px) {
+    .body {
+        position: relative;
+        width: 100%;
+        float: left;
+        padding-top:75px;
+        transform: translateX(0);
+    }
+}
+
+
+
+/*Items*/
+.items {
+    text-decoration:none;
+    position:relative;
+    height:40px;
+    margin-bottom:10px;
+    display:flex;
+    width:calc(100% - 20px);
+    margin-left:10px;
+    cursor:pointer;
+    border-radius:10px;
+}
+.items p {
+    position: relative;
+    font-family: var(--font-light);
+    font-size: var(--font-light-size);
+    align-self:center;
+    touch-action:none;
+    pointer-events:none;
+    user-select: none;
+    flex:1;
+}
+.items svg {
+    height: 20px;
+    position: relative;
+    width: 20px;
+    margin: 10px;  
+    float: left;
+}
+.items.slvz-button.default{
+    box-shadow:none !important;
+    background:transparent;
+}
+.slvz-button.primary div {
+    background-color: var(--primary-color);
+}
+
+.items.open .arrow{
+    transform:rotate(90deg);
+}
+
+.list {
+    width: calc(100% - 50px);
+    padding: 0 15px 0 35px;
+    flex: 1;
+    position: relative;
+    margin-top: 10px;
+    overflow-y: auto;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.list::-webkit-scrollbar {
+    display: none;
+}
+.list p{
+    margin-left:10px;
+}

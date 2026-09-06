@@ -1,0 +1,55 @@
+﻿@page "/fluent-icons"
+
+<PageTitle>SLVZ UI | Fluent icons</PageTitle>
+
+<main>
+    <div class="header">
+
+        <div class="search-bar slvz-card default">
+
+            <input @bind="_search" @onkeydown="(e) => OnEnter(e)" @bind:event="oninput" placeholder="Search" />
+
+            @if (string.IsNullOrEmpty(_search))
+            {
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+                    <path d="M76.53,402.27l88.21-91.74c-22.69-26.92-35.12-60.99-35.11-96.2c0-82.51,67.13-149.64,149.64-149.64
+                    s149.64,67.13,149.64,149.64s-67.13,149.64-149.64,149.64c-30.98,0-60.49-9.34-85.73-27.08l-88.88,92.44
+                    c-3.71,3.86-8.71,5.99-14.07,5.99c-5.07,0-9.88-1.93-13.53-5.45C69.31,422.39,69.07,410.05,76.53,402.27L76.53,402.27z
+                    M279.27,103.72c-60.99,0-110.6,49.62-110.6,110.6s49.62,110.6,110.6,110.6s110.6-49.62,110.6-110.6S340.26,103.72,279.27,103.72
+                    L279.27,103.72z" />
+                </svg>
+            }
+            else
+            {
+                <svg style="cursor:pointer;" @onclick='OnCancelSearch'
+                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+                    <path d="M279,250l140.6-140.6c8-8,8-21,0-29c-8-8-21-8-29,0L250,221L109.4,80.4c-8-8-21-8-29,0c-8,8-8,21,0,29L221,250L80.4,390.6
+                    c-8,8-8,21,0,29v0c8,8,21,8,29,0L250,279l140.6,140.6c8,8,21,8,29,0v0c8-8,8-21,0-29L279,250z" />
+                </svg>
+            }
+
+        </div>
+
+    </div>
+
+    <div @ref="grid" class="grid" @onscroll="OnScroll">
+
+        <div class="count">
+            <label>@totalCount Icons</label>
+        </div>
+
+        @if (_Icons.Count() > 0)
+        {
+            @foreach (var item in _Icons)
+            {
+                <div class="item slvz-button default" @onclick="() => OnIconClick(item)">
+                    <img loading="lazy" style='-webkit-mask:url("icons/@item.Name/@item.FilePreview") no-repeat center; mask:url("icons/@item.Name/@item.FilePreview") no-repeat center;' />
+                    <p>@item.Name</p>
+                </div>
+            }
+        }
+
+    </div>
+
+</main>
+

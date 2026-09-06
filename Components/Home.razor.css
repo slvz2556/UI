@@ -1,0 +1,27 @@
+main {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 20px);
+    display: flex;
+    flex-direction: column;
+    float: left;
+    padding: 20px 15px 0 15px;
+    overflow-y:auto;
+}
+
+.title {
+    position: relative;
+    width: 100%;
+    margin-top: 6px;
+    font-size: var(--font-bold-size);
+    font-family: var(--font-jetbrain);
+    color: var(--font-bold-color);
+}
+.description {
+    position: relative;
+    width: 100%;
+    margin-top: 6px;
+    font-size: var(--font-light-size);
+    font-family: var(--font-space);
+    color: var(--font-light-color);
+}

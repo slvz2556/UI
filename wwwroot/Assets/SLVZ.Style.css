@@ -1,0 +1,236 @@
+﻿@font-face {
+    font-family: 'ebold';
+    src: url('Lato-Bold.ttf') format('truetype');
+    font-weight:500;
+}
+@font-face {
+    font-family: 'elight';
+    src: url('Lato-Light.ttf') format('truetype');
+    font-weight: 350;
+}
+@font-face {
+    font-family: 'pbold';
+    src: url('IRANSans-Medium.ttf') format('truetype');
+    font-weight: 500;
+}
+@font-face {
+    font-family: 'plight';
+    src: url('IRANSans-Light.ttf') format('truetype');
+    font-weight: 350;
+}
+@font-face {
+    font-family: 'consola';
+    src: url('CONSOLA.TTF') format('truetype');
+}
+@font-face {
+    font-family: 'spacegrotesk';
+    src: url('SpaceGrotesk.ttf') format('truetype');
+    font-weight: 350;
+}
+@font-face {
+    font-family: 'jetbrainsmono';
+    src: url('JetBrainsMono.ttf') format('truetype');
+}
+
+:root {
+    --font-bold: 'ebold';
+    --font-light: 'elight';
+    --font-pr-bold: 'pbold';
+    --font-pr-light: 'plight';
+    --font-jetbrain: 'jetbrainsmono';
+    --font-space: 'spacegrotesk';
+    --dialog-backdrop: blur(4px);
+    --font-bold-size: 16px;
+    --font-light-size: 14.5px;
+    --svg-delete-color: #ff0000;
+    --card-radius: 22px;
+    --card-pale-radius: 22px;
+    --btn-primary-radius: 18px;
+    --btn-pale-radius: 18px;
+    --btn-default-radius: 18px;
+}
+
+.disable {
+    pointer-events: none;
+    touch-action:none;
+    opacity: .35;
+}
+
+
+/*=========== Buttons ==============*/
+.slvz-button{
+    border:none;
+    height:40px;
+}
+
+.slvz-button.primary {
+    background: var(--btn-primary-background);
+    color: var(--btn-primary-text-color) !important;
+    box-shadow: var(--btn-primary-shadow);
+    fill: var(--btn-primary-text-color) !important;
+    border-radius: var(--btn-primary-radius);
+}
+.slvz-button.primary:hover{
+    background: var(--btn-primary-hovered-background) !important;
+}
+.slvz-button.primary:active{
+    background: var(--btn-primary-hovered-background) !important;
+}
+
+.slvz-button.default {
+    background: var(--btn-default-background);
+    color: var(--btn-default-text-color) !important;
+    box-shadow: var(--btn-default-shadow);
+    fill: var(--btn-default-text-color) !important;
+    border-radius: var(--btn-default-radius);
+}
+.slvz-button.default:hover{
+    background: var(--btn-default-hovered-background) !important;
+}
+.slvz-button.default:active{
+    background: var(--btn-default-hovered-background) !important;
+}
+
+.slvz-button.pale {
+   background: var(--btn-pale-background);
+    color: var(--font-light-color) !important;
+    box-shadow: var(--btn-pale-shadow);
+    fill: var(--svg-light-fill) !important;
+    border-radius: var(--btn-pale-radius);
+}
+.slvz-button.pale:hover{
+    background: var(--btn-pale-hovered-background) !important;
+}
+.slvz-button.pale:active{
+    background: var(--btn-pale-hovered-background) !important;
+}
+
+
+
+
+/*=========== Trackbar ==============*/
+.slvz-trackbar {
+    position: relative;
+    width: 300px;
+    height: fit-content;
+    height:28px;
+    transition:0 !important;
+}
+.slvz-trackbar .track {
+    position: absolute;
+    background-color: var(--trackbar-track-background);
+    box-shadow: var(--trackbar-track-shadow);
+    height: 12px;
+    border-radius: 5px;
+    width: 100%;
+    margin: 8px 0 8px 0;
+    transition: 0 !important;
+    will-change: transform;
+}
+.slvz-trackbar .fill {
+    position: absolute;
+    background-color: var(--trackbar-fill-background);
+    height: 10px;
+    border-radius: 5px;
+    margin: 8px 0 8px 0;
+    will-change: width;
+    will-change: transform;
+    transition: 0 !important;
+}
+.slvz-trackbar input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+    position: absolute;
+    touch-action:none;
+}
+.slvz-trackbar input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  margin:10px 0 10px 0;
+  height: 8px;
+  background: transparent;
+  border-radius: 5px;
+}
+.slvz-trackbar input[type=range]::-moz-range-track {
+  width: 100%;
+  margin:10px 0 10px 0;
+  height: 8px;
+  background: transparent;
+  border-radius: 5px;
+}
+.slvz-trackbar input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 30px;
+  width: 30px;
+    will-change: transform;
+  border-radius: 50%;
+  background: var(--trackbar-thumb-background);
+  box-shadow:var(--trackbar-thumb-shadow);
+  margin-top: -12px;
+  border: none;
+}
+.slvz-trackbar input[type=range]::-moz-range-thumb {
+  height: 30px;
+  width: 30px;
+  will-change: transform; 
+  border-radius: 50%;
+  background: var(--trackbar-thumb-background);
+  box-shadow:var(--trackbar-thumb-shadow);
+  border: none;
+  margin-top: -12px;
+
+}
+
+
+
+
+/*=========== Checkbox ==============*/
+.slvz-checkbox{
+
+}
+
+
+
+
+/*=========== Radio button ==============*/
+
+
+
+
+
+/*=========== Card ==============*/
+.slvz-card.default {
+    background-color: var(--card-background);
+    box-shadow: var(--card-shadow);
+    border-radius: var(--card-radius);
+}
+.slvz-card.pale {
+    background-color: var(--card-pale-background);
+    box-shadow: var(--card-pale-shadow);
+    border-radius: var(--card-pale-radius);
+}
+
+
+
+
+
+
+/*=========== Dialog ==============*/
+.slvz-dialog {
+    position: fixed;
+    overflow: auto;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: grid;
+    background: var(--dialog-container-background);
+}
+.slvz-dialog .slvz-dialog-body{
+    justify-self:center;
+    align-self:center;
+    border: var(--dialog-border);
+    box-shadow: var(--dialog-shadow);
+    background: var(--dialog-background);
+}

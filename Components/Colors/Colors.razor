@@ -1,0 +1,38 @@
+﻿@page "/colors"
+@using UI.Models.Colors
+<PageTitle>SLVZ UI | Colors</PageTitle>
+
+<main>
+
+    <h1 class="title">Colors</h1>
+    <p class="description">Change components color to see how they look</p>
+
+    <div class="list">
+
+        @foreach (var theme in Themes.List)
+        {
+            <div class="item" @onclick="() => SetColor(theme.Theme.ToString().ToLower())">
+
+                <div class="color-container">
+                    <div class="color" style="background-color:@theme.PrimaryColor">
+
+                        @if (color == theme.Theme.ToString().ToLower())
+                        {
+                            <svg viewBox="0 0 20 20">
+                                <path d="M7.03212 13.9072L3.56056 10.0017C3.28538 9.69214 2.81132 9.66425 2.50174 9.93944C2.19215 10.2146 2.16426 10.6887 2.43945 10.9983L6.43945 15.4983C6.72614 15.8208 7.2252 15.8355 7.53034 15.5303L18.0303 5.03033C18.3232 4.73744 18.3232 4.26256 18.0303 3.96967C17.7374 3.67678 17.2626 3.67678 16.9697 3.96967L7.03212 13.9072Z" />
+                            </svg>
+                        }
+
+                    </div>
+                </div>
+
+                <p>
+                    @theme.EnTitle
+                </p>
+
+            </div>
+        }
+
+    </div>
+
+</main>

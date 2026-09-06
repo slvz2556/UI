@@ -1,0 +1,53 @@
+﻿@if (visibility)
+{
+    <div class="slvz-dialog">
+        <div class="slvz-dialog-body">
+
+            <div class="header">
+
+                <div class="close slvz-button default" @onclick="CloseDialog">
+                    <svg viewBox="0 0 500 500">
+                        <path d="M279,250l140.6-140.6c8-8,8-21,0-29c-8-8-21-8-29,0L250,221L109.4,80.4c-8-8-21-8-29,0c-8,8-8,21,0,29L221,250L80.4,390.6
+                        c-8,8-8,21,0,29v0c8,8,21,8,29,0L250,279l140.6,140.6c8,8,21,8,29,0v0c8-8,8-21,0-29L279,250z" />
+                    </svg>
+                </div>
+
+                <h5>@Icon.Name</h5>
+
+            </div>
+
+            <div class="list">
+                @foreach (var file in Files)
+                {
+                    <div class='item slvz-button @(file.Selected ? "pale" : "")' @onclick="() => SelectFile(file)">
+                        <img loading="lazy" style='-webkit-mask:url("icons/@Icon.Name/@file.Name") no-repeat center; mask:url("icons/@Icon.Name/@file.Name") no-repeat center;' />
+                    </div>
+                }
+            
+            </div>
+            
+            <div class="buttons">
+                <button class="slvz-button primary" @onclick="CopySVG">
+                    @if (copied)
+                    {
+                        <label>Copied 👍🏻</label>
+                    }
+                    else
+                    {
+                        <svg viewBox="0 0 20 20">
+                            <path d="M7 11.5C7 13.433 8.567 15 10.5 15H11.9502C11.7186 16.1411 10.7095 17 9.5 17H5.5C4.11929 17 3 15.8807 3 14.5V8.5C3 7.11929 4.11929 6 5.5 6H7V11.5ZM14.5 3C15.8807 3 17 4.11929 17 5.5V11.5C17 12.8807 15.8807 14 14.5 14H10.5C9.11929 14 8 12.8807 8 11.5V5.5C8 4.11929 9.11929 3 10.5 3H14.5Z" />
+                        </svg>
+                        <label>Copy</label>
+                    }
+                </button>
+                <button class="slvz-button default" @onclick="DownloadSVG">
+                    <svg viewBox="0 0 20 20">
+                        <path d="M15.5 16.9997C15.7761 16.9997 16 17.2236 16 17.4997C16 17.7452 15.8231 17.9494 15.5899 17.9917L15.5 17.9997H4.5C4.22386 17.9997 4 17.7759 4 17.4997C4 17.2543 4.17688 17.0501 4.41012 17.0078L4.5 16.9997H15.5ZM10.0001 2.00195C10.2456 2.00195 10.4497 2.17896 10.492 2.41222L10.5 2.5021L10.496 14.296L14.1414 10.6476C14.3148 10.4739 14.5842 10.4544 14.7792 10.5892L14.8485 10.647C15.0222 10.8204 15.0418 11.0898 14.907 11.2848L14.8492 11.3541L10.3574 15.8541C10.285 15.9267 10.1957 15.9724 10.1021 15.9911L9.99608 16.0008C9.83511 16.0008 9.69192 15.9247 9.60051 15.8065L5.14386 11.3547C4.94846 11.1595 4.94823 10.8429 5.14336 10.6475C5.3168 10.4739 5.58621 10.4544 5.78117 10.5892L5.85046 10.647L9.496 14.288L9.5 2.50181C9.50008 2.22567 9.724 2.00195 10.0001 2.00195Z" />
+                    </svg>
+                    <label>Download</label>
+                </button>
+            </div>
+
+        </div>
+    </div>
+}

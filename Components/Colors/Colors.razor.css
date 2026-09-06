@@ -1,0 +1,92 @@
+main {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 20px);
+    display: flex;
+    flex-direction: column;
+    float: left;
+    padding:20px 15px 0 15px;
+}
+.title {
+    position: relative;
+    width: 100%;
+    margin-top: 6px;
+    font-size: var(--font-bold-size);
+    font-family: var(--font-jetbrain);
+    color: var(--font-bold-color);
+}
+.description {
+    position: relative;
+    width: 100%;
+    margin-top: 6px;
+    font-size: var(--font-light-size);
+    font-family: var(--font-space);
+    color: var(--font-light-color);
+}
+
+
+
+.list {
+    position: relative;
+    width: calc(100% - 30px);
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    padding: 50px 15px 50px 15px;
+    justify-content: safe center;
+    flex-wrap: wrap;
+    overflow-x: visible !important;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.list::-webkit-scrollbar {
+    display: none;
+}
+
+.list .item {
+    position: relative;
+    width: 110px;
+    margin: 5px;
+    height: fit-content;
+    border-radius: 10px;
+}
+.list .item .color-container{
+    position:relative;
+    height:50px;
+    margin-top:8px;
+    width:50px;
+    border-radius:50%;
+    left:50%;
+    transform:translateX(-50%);
+    background: var(--btn-default-background);
+    box-shadow: var(--btn-default-shadow);
+    display:grid;
+}
+.list .item .color{
+    height:40px;
+    width:40px;
+    position:relative;
+    justify-self:center;
+    align-self:center;
+    border-radius:50%;
+    display:grid;
+    box-shadow: var(--btn-primary-shadow);
+}
+.list .item .color svg{
+    position:relative;
+    height:20px;
+    width:20px;
+    justify-self:center;
+    align-self:center;
+    fill: var(--btn-primary-text-color) !important;
+}
+.list .item p{
+    position:relative;
+    width:100%;
+    margin-top:6px;
+    font-size:var(--font-light-size);
+    font-family:var(--font-space);
+    text-align:center;
+    color:var(--btn-default-text-color);
+}
+
