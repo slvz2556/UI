@@ -118,11 +118,18 @@ body {
     border-radius: 6px;
     cursor: pointer;
 }
-  .copy-btn:hover{ border-color:var(--accent); color:var(--accent); }
-  .copy-btn.copied{ border-color:var(--accent); color:var(--accent); }
+    .copy-btn:hover {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+    .copy-btn.copied {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
 .codeblock pre {
     margin: 0;
     padding: 18px 20px;
+    max-height: 500px;
     overflow: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--primary-color) var(--surface);
@@ -134,13 +141,19 @@ body {
 *::-webkit-scrollbar-track {
     background-color: var(--surface);
 }
-
-.codeblock pre code{
-font-family:var(--font-jetbrain);
-font-size:var(--font-jetbrain) ;
-line-height:1.8;
-background:transparent !important;
-user-select:text !important;
+.codeblock pre {
+    font-family: var(--font-jetbrain);
+    font-size: 12px;
+    line-height: 1.8;
+    background: transparent !important;
+    user-select: text !important;
+}
+.codeblock pre code {
+    font-family: var(--font-jetbrain);
+    font-size: 12px;
+    line-height: 1.8;
+    background: transparent !important;
+    user-select: text !important;
 }
 .codeblock pre code *{
     user-select:text !important;

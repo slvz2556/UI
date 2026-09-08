@@ -29,7 +29,7 @@ public partial class Icons
 #if DEBUG
         icons = await client.GetFromJsonAsync<List<IconModel>>("https://localhost:7296/icons/icons.json");
 #else
-        icons = await client.GetFromJsonAsync<List<IconModel>>("https://icons.slvz.dev/icons/icons.json");
+        icons = await client.GetFromJsonAsync<List<IconModel>>("https://ui.slvz.dev/icons/icons.json");
 #endif
 
         totalCount = icons.Count();

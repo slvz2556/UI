@@ -37,7 +37,6 @@ public partial class MainLayout : IDisposable
         await InvokeAsync(StateHasChanged);
     }
 
-    string? Home, Icons;
 
     private void ChangeListStatus()
     {
@@ -59,6 +58,7 @@ public partial class MainLayout : IDisposable
 
         MenuItems.Add(new MenuItem { Name = "Overview", Location = "/", Selected = false });
         MenuItems.Add(new MenuItem { Name = "Fluent icons", Location = "fluent-icons", Selected = false });
+        MenuItems.Add(new MenuItem { Name = "Layout designer", Location = "layout-designer", Selected = false });
 
         MenuItems.Add(new MenuItem { Name = "Colors", Location = "colors", Selected = false });
     }
