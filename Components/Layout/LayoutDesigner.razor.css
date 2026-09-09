@@ -95,6 +95,7 @@ main {
     width: 100%;
     position:relative;
     flex-wrap: wrap;
+    margin-top:50px;
 }
 .canvas-wrap{
     width:100%;
@@ -105,10 +106,12 @@ main {
     justify-items:center;
     align-items:center;
 }
-.device-frame{
-    width:100%;
-    max-width:1080px;
-    transition:max-width .25s ease;
+.device-frame {
+    width: 100%;
+    box-shadow: var(--btn-pale-shadow);
+    max-width: 1080px;
+    border-radius: 4px;
+    transition: max-width .25s ease;
 }
 .device-frame[data-device="tablet"]{ max-width:520px; }
 .device-frame[data-device="mobile"]{ max-width:380px; }

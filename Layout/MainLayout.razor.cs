@@ -61,6 +61,8 @@ public partial class MainLayout : IDisposable
         MenuItems.Add(new MenuItem { Name = "Layout designer", Location = "layout-designer", Selected = false });
 
         MenuItems.Add(new MenuItem { Name = "Colors", Location = "colors", Selected = false });
+        MenuItems.Add(new MenuItem { Name = "Buttons", Location = "buttons", Selected = false });
+        MenuItems.Add(new MenuItem { Name = "Cards", Location = "cards", Selected = false });
     }
 
 }

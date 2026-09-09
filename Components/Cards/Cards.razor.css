@@ -1,0 +1,39 @@
+main {
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    float: left;
+    padding: 20px 15px 20px 15px;
+}
+
+.title {
+    position: relative;
+    width: 100%;
+    margin-top: 6px;
+    font-size: var(--font-bold-size);
+    font-family: var(--font-jetbrain);
+    color: var(--font-bold-color);
+}
+.description {
+    position: relative;
+    width: 100%;
+    margin-top: 6px;
+    font-size: var(--font-light-size);
+    font-family: var(--font-space);
+    color: var(--font-light-color);
+}
+
+
+.card {
+    height: 110px;
+    width: calc(100% - 32px);
+    margin-top: 10px;
+    display:grid;
+    justify-content:center;
+    align-content:center;
+    font-family:var(--font-jetbrain);
+    color:var(--font-light-color);
+    font-size:var(--font-light-size);
+}
