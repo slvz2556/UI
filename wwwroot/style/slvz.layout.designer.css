@@ -1,5 +1,5 @@
 ﻿/* ---------- the actual grid (editor preview only) ---------- */
-.slvz-grid {
+.slvz-layout {
     --cols: 12;
     --rows: 10;
     position: relative;

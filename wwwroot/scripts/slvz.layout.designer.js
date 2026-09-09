@@ -12,14 +12,14 @@
         mobile: "@media screen and (max-width: 600px)"
     };
     var MAX_SECTIONS = 10;
-    var STORAGE_KEY = "slvz-grid-layout-v4";
+    var STORAGE_KEY = "slvz-layout-layout-v4";
 
     /** @type {{id:number, desktop:Placement, tablet:Placement, mobile:Placement}[]} */
     var sections = [];
     var currentDevice = "desktop";
     var activeTab = "html";
 
-    var gridEl = document.getElementById("slvzGrid");
+    var layoutEl = document.getElementById("slvzLayout");
     var frameEl = document.getElementById("deviceFrame");
     var addBtn = document.getElementById("addBtn");
     var resetBtn = document.getElementById("resetBtn");
@@ -36,7 +36,7 @@
             // TODO(C# bridge): localStorage write failed (quota / disabled / private mode).
             // Forward `err.message` to the native host via your JS-interop bridge
             // (e.g. window.chrome.webview.postMessage) so C# can show a MessageBox.
-            console.error("slvz-grid: failed to save state", err);
+            console.error("slvz-layout: failed to save state", err);
         }
     }
 
@@ -54,7 +54,7 @@
         } catch (err) {
             // TODO(C# bridge): localStorage data was corrupted / unreadable.
             // Forward `err.message` to C# for a MessageBox, then fall back to an empty layout.
-            console.error("slvz-grid: failed to load state", err);
+            console.error("slvz-layout: failed to load state", err);
             sections = [];
         }
     }
@@ -113,15 +113,15 @@
     // ---------------- rendering ----------------
     function render() {
         var dims = DEVICE_DIMS[currentDevice];
-        gridEl.style.setProperty("--cols", dims.cols);
-        gridEl.style.setProperty("--rows", dims.rows);
-        gridEl.innerHTML = "";
+        layoutEl.style.setProperty("--cols", dims.cols);
+        layoutEl.style.setProperty("--rows", dims.rows);
+        layoutEl.innerHTML = "";
 
         if (sections.length === 0) {
             var hint = document.createElement("div");
             hint.className = "empty-hint";
             hint.textContent = "Click + Add section to place your first block";
-            gridEl.appendChild(hint);
+            layoutEl.appendChild(hint);
         }
 
         sections.forEach(function (s) {
@@ -143,7 +143,7 @@
                 hideBtn +
                 '<div class="remove" title="Remove">&times;</div>' +
                 '<div class="resize-handle"></div>';
-            gridEl.appendChild(el);
+            layoutEl.appendChild(el);
 
             el.querySelector(".remove").addEventListener("click", function (ev) {
                 ev.stopPropagation();
@@ -272,7 +272,7 @@
             localStorage.removeItem(STORAGE_KEY);
         } catch (err) {
             // TODO(C# bridge): localStorage clear failed — forward to C# for a MessageBox.
-            console.error("slvz-grid: failed to clear storage", err);
+            console.error("slvz-layout: failed to clear storage", err);
         }
         render();
     });
@@ -309,7 +309,7 @@
         var device = currentDevice;
         var p = s[device];
         var dims = DEVICE_DIMS[device];
-        var rect = gridEl.getBoundingClientRect();
+        var rect = layoutEl.getBoundingClientRect();
         var cellW = rect.width / dims.cols;
         var cellH = rect.height / dims.rows;
         var startCol = p.col, startRow = p.row;
@@ -375,7 +375,7 @@
         var device = currentDevice;
         var p = s[device];
         var dims = DEVICE_DIMS[device];
-        var rect = gridEl.getBoundingClientRect();
+        var rect = layoutEl.getBoundingClientRect();
         var cellW = rect.width / dims.cols;
         var cellH = rect.height / dims.rows;
         var startCspan = p.cspan, startRspan = p.rspan;
@@ -421,7 +421,7 @@
     // ---------------- code generation (raw, exportable, responsive) ----------------
     function generateHTML() {
         var lines = [];
-        lines.push('<div class="slvz-grid">');
+        lines.push('<div class="slvz-layout">');
         sections
             .slice()
             .sort(function (a, b) { return a.id - b.id; })
@@ -437,7 +437,7 @@
     function gridRuleLines(device, isBase) {
         var dims = DEVICE_DIMS[device];
         var lines = [];
-        lines.push(".slvz-grid {");
+        lines.push(".slvz-layout {");
         if (isBase) {
             lines.push("  display: grid;");
             lines.push("  width: 100%;");
