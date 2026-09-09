@@ -45,8 +45,8 @@
     <div class="canvas-wrap">
         <div class="device-frame" id="deviceFrame" data-device="desktop">
             <div class="slvz-grid" id="slvzGrid"></div>
-            <div class="hidden-tray" id="hiddenTray" hidden></div>
         </div>
+        <div class="hidden-tray" id="hiddenTray" hidden></div>
     </div>
 
     <div class="code-panel">
@@ -59,12 +59,9 @@
                 <span id="codeLangLabel">html</span>
                 <button class="copy-btn" id="copyBtn"><span class="copy-label">Copy</span></button>
             </div>
-            <pre id="codeOutput"></pre>
+            <pre>
+                <code id="codeOutput"></code>
+            </pre>
         </div>
-        <p class="hint">
-            The output is pure layout: only <code>.slvz-grid</code> and the <code>.tile-N</code> placement rules,
-            no colors, no CSS variables. It always includes all three breakpoints (Desktop as the base, Tablet and
-            Mobile inside <code>@("@media screen and (...)")</code>), no matter which device you're currently viewing.
-        </p>
     </div>
 </main>

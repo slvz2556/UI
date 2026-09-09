@@ -492,6 +492,10 @@
 
     function renderCode() {
         codeOutput.textContent = activeTab === "html" ? generateHTML() : generateCSS();
+        codeOutput.removeAttribute('class');
+        codeOutput.classList.add(activeTab === "html" ? "language-html" : "language-css");
+        codeOutput.removeAttribute('data-highlighted');
+        hljs.highlightAll();
         codeLangLabel.textContent = activeTab;
     }
 
@@ -511,8 +515,6 @@
         try {
             await navigator.clipboard.writeText(text);
         } catch (err) {
-            // TODO(C# bridge): clipboard write failed (permissions / unsupported).
-            // Forward `err.message` to C# via JS-interop for a MessageBox, then fall back:
             var ta = document.createElement("textarea");
             ta.value = text;
             document.body.appendChild(ta);
