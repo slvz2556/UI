@@ -79,7 +79,7 @@ public partial class IconPreview : IDisposable
 #if DEBUG
         var xml = await client.GetStringAsync($"https://localhost:7296/icons/{Icon.Name}/{file.Name}");
 #else
-        var xml = await client.GetStringAsync($"https://icons.slvz.dev/icons/{Icon.Name}/{file.Name}");
+        var xml = await client.GetStringAsync($"https://ui.slvz.dev/icons/{Icon.Name}/{file.Name}");
 #endif
 
         await Js.InvokeVoidAsync("CopyText", xml);
@@ -102,7 +102,7 @@ public partial class IconPreview : IDisposable
 #if DEBUG
         await Js.InvokeVoidAsync("DownloadFile", $"https://localhost:7296/icons/icons/{Icon.Name}/{file.Name}");
 #else
-        await Js.InvokeVoidAsync("DownloadFile", $"https://icons.slvz.dev/icons/icons/{Icon.Name}/{file.Name}");
+        await Js.InvokeVoidAsync("DownloadFile", $"https://ui.slvz.dev/icons/icons/{Icon.Name}/{file.Name}");
 #endif
     }
 
