@@ -42,8 +42,9 @@
     height: calc(100vh - 50px);
     transition: .8s;
     top: 25px;
-    border-radius:15px;
-    display:grid;
+    overflow: visible;
+    border-radius: 15px;
+    display: grid;
     z-index: 11;
     white-space: nowrap;
 }

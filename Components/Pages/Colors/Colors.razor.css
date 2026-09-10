@@ -28,11 +28,10 @@ main {
 
 .list {
     position: relative;
-    width: calc(100% - 30px);
     flex: 1;
     overflow-y: auto;
     display: flex;
-    padding: 50px 15px 50px 15px;
+    padding: 0px 15px 0px 15px;
     justify-content: safe center;
     flex-wrap: wrap;
     overflow-x: visible !important;
@@ -90,3 +89,58 @@ main {
     color:var(--btn-default-text-color);
 }
 
+
+
+
+.flex{
+    position:relative;
+    width:100%;
+    display:flex;
+    margin-top:40px;
+}
+.color-picker{
+    width:fit-content;
+    margin-top:10px;
+}
+.mode-switch {
+    display: flex;
+    position: relative;
+    overflow: visible;
+    width: fit-content;
+    gap: 5px;
+    left:50%;
+    transform: translateX(-50%) translateY(-2px);
+    background: var(--btn-default-background);
+    box-shadow: var(--btn-default-shadow);
+    border-radius: var(--btn-default-radius);
+    padding: 2px;
+    margin-bottom:20px;
+}
+.mode-switch .slvz-button{    
+    height:35px;
+    position:relative;
+    padding:0 12px 0 12px;
+    border-radius: var(--btn-default-radius);
+    font-family:var(--font-jetbrain);
+    color:var(--btn-default-text-color);
+}
+.btn-generate {
+    position: relative;
+    width: 180px;
+    left: 50%;
+    transform: translateX(-50%);
+    height:40px;
+    margin-top: 20px;
+}
+
+@media screen and (max-width: 550px) {
+    .flex{
+        flex-direction:column;
+    }
+    .color-picker{
+        width:100%;
+    }
+    .list {
+        padding: 30px 15px 0px 15px;
+    }
+}

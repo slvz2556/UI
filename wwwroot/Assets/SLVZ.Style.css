@@ -111,10 +111,11 @@
 /*=========== Trackbar ==============*/
 .slvz-trackbar {
     position: relative;
-    width: 300px;
+    min-width:100px;
     height: fit-content;
     height:28px;
     transition:0 !important;
+    overflow:visible;
 }
 .slvz-trackbar .track {
     position: absolute;
@@ -194,6 +195,18 @@
 
 /*=========== Radio button ==============*/
 
+
+
+
+
+/*=========== Text input ==============*/
+.slvz-textinput {
+    box-shadow: var(--textbox-shadow);
+    background: var(--textbox-background);
+    color: var(--font-bold-color);
+    border-radius:5px;
+    border:none;
+}
 
 
 

@@ -7,7 +7,7 @@ using System.Net.NetworkInformation;
 using UI.Components.Dialogs;
 using Microsoft.AspNetCore.Components;
 
-namespace UI.Components.Icons;
+namespace UI.Components.Pages.Icons;
 
 public partial class Icons
 {

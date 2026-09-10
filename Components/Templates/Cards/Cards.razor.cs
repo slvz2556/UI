@@ -1,8 +1,8 @@
 using Microsoft.JSInterop;
 
-namespace UI.Components.Buttons;
+namespace UI.Components.Templates.Cards;
 
-public partial class Buttons
+public partial class Cards
 {
     protected override async void OnAfterRender(bool firstRender)
     {

@@ -1,0 +1,76 @@
+﻿@page "/colors"
+@using UI.Models.Colors
+<PageTitle>SLVZ UI | Colors</PageTitle>
+
+<main>
+
+    <h1 class="title">Colors</h1>
+    <p class="description">Change components color to see how they look</p>
+
+
+    <h1 class="title" style="margin-top:50px;">Generate new theme</h1>
+    <p class="description">Pick a color and click on generate to create new theme template or choose between existing templates</p>
+
+    <div class="flex">
+
+        <div class="color-picker">
+
+            <div class="mode-switch">
+                <button class='slvz-button @(mode == "light" ? "primary" : "")' @onclick='() => ChangeMode("light")' title="Light">
+                    Light
+                </button>
+                <button class='slvz-button @(mode == "dark" ? "primary" : "")' @onclick='() => ChangeMode("dark")' title="Dark">
+                    Dark
+                </button>
+            </div>
+
+            <UI.Components.Shared.ColorPicker Value="@color" ValueChanged="(e) => color = e" />
+             
+            <button class="btn-generate slvz-button primary" @onclick="GenerateNewTheme">
+                Generate
+            </button>
+
+        </div>
+
+        <div class="list">
+
+            @foreach (var theme in Themes.List)
+            {
+                <div class="item" @onclick="() => SetColor(theme.Theme.ToString().ToLower())">
+
+                    <div class="color-container">
+                        <div class="color" style="background-color:@theme.PrimaryColor">
+
+                            @if (color == theme.Theme.ToString().ToLower())
+                            {
+                                <svg viewBox="0 0 20 20">
+                                    <path d="M7.03212 13.9072L3.56056 10.0017C3.28538 9.69214 2.81132 9.66425 2.50174 9.93944C2.19215 10.2146 2.16426 10.6887 2.43945 10.9983L6.43945 15.4983C6.72614 15.8208 7.2252 15.8355 7.53034 15.5303L18.0303 5.03033C18.3232 4.73744 18.3232 4.26256 18.0303 3.96967C17.7374 3.67678 17.2626 3.67678 16.9697 3.96967L7.03212 13.9072Z" />
+                                </svg>
+                            }
+
+                        </div>
+                    </div>
+
+                    <p>
+                        @theme.EnTitle
+                    </p>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+    <div class="codeblock">
+        <div class="head">
+            <span>css</span>
+            <button class="copy-btn" onclick="CopyCode(this)"><span class="copy-label">Copy</span></button>
+        </div>
+        <pre>
+            <code @ref="code" class="language-css">
+            </code>
+        </pre>
+    </div>
+      
+</main>

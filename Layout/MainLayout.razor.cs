@@ -59,10 +59,11 @@ public partial class MainLayout : IDisposable
         MenuItems.Add(new MenuItem { Name = "Overview", Location = "/", Selected = false });
         MenuItems.Add(new MenuItem { Name = "Fluent icons", Location = "fluent-icons", Selected = false });
         MenuItems.Add(new MenuItem { Name = "Layout designer", Location = "layout-designer", Selected = false });
-
         MenuItems.Add(new MenuItem { Name = "Colors", Location = "colors", Selected = false });
+
         MenuItems.Add(new MenuItem { Name = "Buttons", Location = "buttons", Selected = false });
         MenuItems.Add(new MenuItem { Name = "Cards", Location = "cards", Selected = false });
+        MenuItems.Add(new MenuItem { Name = "Trackbar", Location = "trackbar", Selected = false });
     }
 
 }

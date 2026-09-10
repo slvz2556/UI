@@ -1,0 +1,55 @@
+main {
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    float: left;
+    padding: 20px 15px 20px 15px;
+}
+
+.title {
+    position: relative;
+    width: 100%;
+    margin-top: 6px;
+    font-size: var(--font-bold-size);
+    font-family: var(--font-jetbrain);
+    color: var(--font-bold-color);
+}
+.description {
+    position: relative;
+    width: 100%;
+    margin-top: 6px;
+    font-size: var(--font-light-size);
+    font-family: var(--font-space);
+    color: var(--font-light-color);
+}
+
+
+.flex{
+    width:fit-content;
+    margin-top:20px;
+    gap:10px;
+    display:flex;
+    padding:10px 5px 10px 5px;
+}
+.flex span{
+    align-self:center;
+    font-size: var(--font-light-size);
+    font-family: var(--font-space);
+    color: var(--font-light-color);
+}
+.flex input{
+    width:50px;
+    font-size: var(--font-light-size);
+    font-family: var(--font-space);
+    padding:10px 5px 10px 5px;
+    margin-right:10px;
+}
+
+
+.slvz-trackbar {
+    width:calc(100% - 30px);
+    margin-top:25px;
+    max-width:300px;
+}

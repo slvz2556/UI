@@ -1,0 +1,60 @@
+
+<div class="cp-root">
+
+    <div class="cp-sv-wrap" @ref="_svElement"
+         style="--cp-hue:@Hue"
+         @onpointerdown="OnSvPointerDown"
+         @onpointermove="OnSvPointerMove"
+         @onpointerup="OnSvPointerUp"
+         @onpointercancel="OnSvPointerUp">
+        <div class="cp-sv-thumb" style="left:@(SvThumbX)px; top:@(SvThumbY)px;"></div>
+    </div>
+
+    <div class="cp-hue-wrap" @ref="_hueElement"
+         @onpointerdown="OnHuePointerDown"
+         @onpointermove="OnHuePointerMove"
+         @onpointerup="OnHuePointerUp"
+         @onpointercancel="OnHuePointerUp">
+        <div class="cp-hue-thumb" style="left:@(HueThumbX)px;"></div>
+    </div>
+
+    <div class="cp-bottom-row">
+        <div class="cp-preview" style="background:@HexValue"></div>
+
+        <div class="cp-fields">
+            <label class="cp-field">
+                <span>HEX</span>
+                <input class="cp-hex-input slvz-textinput"
+                       value="@_hexInputText"
+                       @onchange="OnHexInputChanged" />
+            </label>
+
+            <div class="cp-rgb-row">
+                <label class="cp-field cp-field-sm">
+                    <span>R</span>
+                    <input type="number" min="0" max="255" class="slvz-textinput" value="@_r" @onchange="e => OnRgbChanged(e, 0)" />
+                </label>
+                <label class="cp-field cp-field-sm">
+                    <span>G</span>
+                    <input type="number" min="0" max="255" class="slvz-textinput" value="@_g" @onchange="e => OnRgbChanged(e, 1)" />
+                </label>
+                <label class="cp-field cp-field-sm">
+                    <span>B</span>
+                    <input type="number" min="0" max="255" class="slvz-textinput" value="@_b" @onchange="e => OnRgbChanged(e, 2)" />
+                </label>
+            </div>
+        </div>
+    </div>
+
+    @if (PresetColors is { Count: > 0 })
+    {
+        <div class="cp-swatches">
+            @foreach (var swatch in PresetColors)
+            {
+                <button type="button" class="cp-swatch" style="background:@swatch"
+                        @onclick="() => SelectPreset(swatch)"></button>
+            }
+        </div>
+    }
+
+</div>

@@ -4,7 +4,19 @@ window.addEventListener('load', function () {
     let _color = localStorage.getItem("Color");
 
     if (_color != null) {
-        if (_color.length > 0) {
+
+        if (_color.length == 0) {
+            _color = "azuresky";
+            SetTheme(_color);
+        }
+
+
+
+        if (_color.startsWith("#") && _color.length >= 12) {
+            let str = _color.split(' ');
+            GenerateTheme(str[0], str[1]);
+        }
+        else {
             SetTheme(_color);
         }
     }
@@ -122,4 +134,15 @@ async function CopyCode(btn) {
         label.textContent = original;
         btn.classList.remove('copied');
     }, 1800);
+}
+
+
+
+function capture(element, pointerId) {
+    element.setPointerCapture(pointerId);
+}
+function release(element, pointerId) {
+    if (element.hasPointerCapture(pointerId)) {
+        element.releasePointerCapture(pointerId);
+    }
 }

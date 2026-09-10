@@ -1,0 +1,66 @@
+﻿@page "/trackbar"
+<PageTitle>SLVZ UI | Trackbar</PageTitle>
+
+
+<main>
+
+    <h1 style="font-size:25px;" class="title">Trackbar</h1>
+    <p class="description">Trackbar style</p>
+
+
+    <div class="flex">
+        <span>Value: @Value</span>
+    </div>
+    
+    <div class="slvz-trackbar">
+
+        <div class="track"></div>
+        <div class="fill" style="width:@FillWidth;"></div>
+
+        <input type="range" min="@Min" max="@Max" step="@Steps" @bind="Value" @oninput="OnInput" />
+
+    </div>
+    
+    <div class="flex">
+
+        <span>Min</span>
+        <input class="slvz-textinput" @bind="Min" type="number" maxlength="4" />
+
+        <span>Max</span>
+        <input class="slvz-textinput" @bind="Max" type="number" maxlength="4" />
+
+        <span>Steps</span>
+        <input class="slvz-textinput" @bind="Steps" type="number" maxlength="2" />
+
+    </div>
+
+
+    <div class="codeblock">
+        <div class="head">
+            <span>razor</span>
+            <button class="copy-btn" onclick="CopyCode(this)"><span class="copy-label">Copy</span></button>
+        </div>
+        <pre>
+            <code class="language-razor">
+@("<div class=\"slvz-trackbar\">")
+    @("<div class=\"track\"></div>")
+    @("<div class=\"fill\" style=\"width:@FillWidth;\"></div>")
+    @("<input type=\"range\" min=\"@Min\" max=\"@Max\" step=\"@Steps\" @bind=\"Value\" @oninput=\"OnInput\" />")
+@("</div>")
+
+
+@("@code{")
+    @("private int Value = 0, Steps = 1;")
+    @("private double Min = 0, Max = 100;")
+    @("private string FillWidth => $\"{(((double)Value - Min) / (Max - Min)) * 100}%\";")
+    @("private void OnInput(ChangeEventArgs e)")
+    @("{")
+        @("Value = int.Parse(e.Value?.ToString());")
+        @("//Do something")
+    @("}")
+@("}")
+            </code>
+        </pre>
+    </div>
+
+</main>

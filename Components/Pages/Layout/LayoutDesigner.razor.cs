@@ -1,6 +1,6 @@
 using Microsoft.JSInterop;
 
-namespace UI.Components.Layout;
+namespace UI.Components.Pages.Layout;
 
 public partial class LayoutDesigner
 {
