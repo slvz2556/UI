@@ -1,4 +1,3 @@
-using UI.Models;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using System.Data;
@@ -6,6 +5,7 @@ using System.Net.Http.Json;
 using System.Net.NetworkInformation;
 using UI.Components.Dialogs;
 using Microsoft.AspNetCore.Components;
+using UI.Models.Icons;
 
 namespace UI.Components.Pages.Icons;
 

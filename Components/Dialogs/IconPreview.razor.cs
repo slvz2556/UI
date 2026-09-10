@@ -1,6 +1,6 @@
-using UI.Models;
 using Microsoft.JSInterop;
 using System.Net.Http.Json;
+using UI.Models.Icons;
 
 namespace UI.Components.Dialogs;
 

@@ -62,6 +62,12 @@
     border:none;
     height:40px;
 }
+.slvz-button.slvz-icon {
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:unsafe center;
+}
 
 .slvz-button.primary {
     background: var(--btn-primary-background);
