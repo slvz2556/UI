@@ -58,15 +58,13 @@
 
 
 /*=========== Buttons ==============*/
-.slvz-button{
-    border:none;
-    height:40px;
-}
-.slvz-button.slvz-icon {
-    display:flex;
-    gap:8px;
-    align-items:center;
-    justify-content:unsafe center;
+.slvz-button {
+    border: none;
+    height: 40px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: unsafe center;
 }
 
 .slvz-button.primary {
@@ -206,12 +204,25 @@
 
 
 /*=========== Text input ==============*/
-.slvz-textinput {
+.slvz-textbox {
     box-shadow: var(--textbox-shadow);
     background: var(--textbox-background);
-    color: var(--font-bold-color);
-    border-radius:5px;
+    color: var(--font-bold-color) !important;
+    fill: var(--font-bold-color) !important;
+    border-radius: 8px;
+    display: flex;
+    border: none;
+    padding: 5px;
+    gap: 8px;
+    align-items: center;
+    align-content: center;
+}
+.slvz-textbox input{
     border:none;
+    position:relative;
+    color: var(--font-bold-color) !important;
+    background-color:transparent;
+    flex:1;
 }
 
 

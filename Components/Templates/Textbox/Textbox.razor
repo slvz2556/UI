@@ -1,0 +1,84 @@
+﻿@page "/textbox"
+<PageTitle>SLVZ UI | Textbox</PageTitle>
+
+
+<main>
+
+    <h1 style="font-size:25px;" class="title">Textbox</h1>
+    <p class="description">All textboxs with different styles</p>
+
+
+    <h1 style="font-size:25px; margin-top:40px; " class="title">Normal textbox</h1>
+    <div class="slvz-textbox box">
+        <input type="text" placeholder="Write something" maxlength="100" />
+    </div>
+
+    <div class="codeblock">
+        <div class="head">
+            <span>razor</span>
+            <button class="copy-btn" onclick="CopyCode(this)"><span class="copy-label">Copy</span></button>
+        </div>
+        <pre>
+            <code class="language-razor">
+@("<div class=\"slvz-textbox\">")
+    @("<input type=\"text\" placeholder=\"Write something\" maxlength=\"100\" />")
+@("</div>")
+            </code>
+        </pre>
+    </div>
+
+
+    <h1 style="font-size:25px; margin-top:40px;" class="title">Textbox with icon</h1>
+    <div class="slvz-textbox box">
+        <svg viewBox="0 0 20 20">
+            <path d="M13.7291 14.4362C12.5924 15.411 11.115 16 9.5 16C5.91015 16 3 13.0899 3 9.5C3 5.91015 5.91015 3 9.5 3C13.0899 3 16 5.91015 16 9.5C16 11.115 15.411 12.5924 14.4361 13.7292L17.8535 17.1465C18.0487 17.3417 18.0487 17.6583 17.8535 17.8536C17.6799 18.0271 17.4105 18.0464 17.2156 17.9114L17.1464 17.8536L13.7291 14.4362ZM13.0196 13.7266C13.276 13.5128 13.5127 13.2761 13.7265 13.0197C14.5216 12.0659 15 10.8388 15 9.5C15 6.46243 12.5376 4 9.5 4C6.46243 4 4 6.46243 4 9.5C4 12.5376 6.46243 15 9.5 15C10.8388 15 12.0658 14.5217 13.0196 13.7266Z" />
+        </svg>
+        <input type="text" placeholder="Search something" maxlength="100" />
+    </div>
+
+    <div class="codeblock">
+        <div class="head">
+            <span>razor</span>
+            <button class="copy-btn" onclick="CopyCode(this)"><span class="copy-label">Copy</span></button>
+        </div>
+        <pre>
+            <code class="language-razor">
+@("<div class=\"slvz-textbox\">")
+    @("<img src='https://ui.slvz.dev/icons/Search/ic_fluent_search_20_regular.svg'/>")
+    @("<input type=\"text\" placeholder=\"Search something\" maxlength=\"100\" />")
+@("</div>")
+            </code>
+        </pre>
+    </div>
+
+
+    <h1 style="font-size:25px; margin-top:40px;" class="title">Textbox with icon and button</h1>
+    <div class="slvz-textbox box">
+        <svg viewBox="0 0 20 20">
+            <path d="M18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18C14.4183 18 18 14.4183 18 10ZM3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10ZM13.5 8.5C13.5 7.94772 13.0523 7.5 12.5 7.5C11.9477 7.5 11.5 7.94772 11.5 8.5C11.5 9.05228 11.9477 9.5 12.5 9.5C13.0523 9.5 13.5 9.05228 13.5 8.5ZM8.5 8.5C8.5 7.94772 8.05228 7.5 7.5 7.5C6.94772 7.5 6.5 7.94772 6.5 8.5C6.5 9.05228 6.94772 9.5 7.5 9.5C8.05228 9.5 8.5 9.05228 8.5 8.5ZM6.88868 12.5146C6.71498 12.2999 6.40014 12.2667 6.18548 12.4404C5.97081 12.6141 5.93761 12.929 6.11132 13.1436C7.02715 14.2754 8.42909 15.0004 10 15.0004C11.5709 15.0004 12.9729 14.2754 13.8887 13.1436C14.0624 12.929 14.0292 12.6141 13.8145 12.4404C13.5999 12.2667 13.285 12.2999 13.1113 12.5146C12.3772 13.4218 11.2564 14.0004 10 14.0004C8.74365 14.0004 7.62281 13.4218 6.88868 12.5146Z" />
+        </svg>
+        <input type="text" placeholder="Search something" maxlength="100" />
+        <button class="slvz-button primary">Send</button>
+    </div>
+
+    <div class="codeblock">
+        <div class="head">
+            <span>razor</span>
+            <button class="copy-btn" onclick="CopyCode(this)"><span class="copy-label">Copy</span></button>
+        </div>
+        <pre>
+            <code class="language-razor">
+@("<div class=\"slvz-textbox\">")
+    @("<img src='https://ui.slvz.dev/icons/Emoji/ic_fluent_emoji_20_regular.svg'/>")
+    @("<input type=\"text\" placeholder=\"Search something\" maxlength=\"100\" />")
+    @("<button class=\"slvz-button primary\">Send</button>")
+@("</div>")
+            </code>
+        </pre>
+    </div>
+
+
+
+
+
+</main>
