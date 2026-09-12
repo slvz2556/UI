@@ -73,6 +73,7 @@ main{
     margin:5px;
     height:fit-content;
     border-radius: 10px;
+    display:block !important;
 }
 .item img {
     width: 40px;
