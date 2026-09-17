@@ -27,8 +27,14 @@ main {
 
 
 .slvz-drop-down{
-margin-top:20px;
+    margin-top:20px;
+    width:210px;
+}
+.slvz-drop-down-body span{
+    font-family:var(--font-light);
+    font-size:var(--font-light-size);
 }
 .slvz-drop-down-list .slvz-button {
-    height:35px;
+    height: 35px;
+    font-family: var(--font-light);
 }

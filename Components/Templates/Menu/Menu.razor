@@ -4,18 +4,17 @@
 
 <main>
 
-    <h1 style="font-size:25px;" class="title">Drop down list</h1>
-    <p class="description">Trackbar style</p>
+    <h1 style="font-size:25px;" class="title">Drop-Down list</h1>
 
-    <div class="slvz-drop-down slvz-button default" onclick="OpenDropDownList(this)">
-
-        <p>
-            @selectedItem.ToString()
-        </p>
-        <svg class="slvz-arrow" viewBox="0 0 24 24">
-            <path d="M19.7036 12L11.2125 3.27302C10.9236 2.97614 10.9301 2.50131 11.227 2.21246C11.5239 1.9236 11.9987 1.93011 12.2875 2.22698L21.2875 11.477C21.5708 11.7681 21.5708 12.2319 21.2875 12.523L12.2875 21.773C11.9987 22.0699 11.5239 22.0764 11.227 21.7875C10.9301 21.4987 10.9236 21.0239 11.2125 20.727L19.7036 12Z" />
-        </svg>
-
+    <div class="slvz-drop-down">
+        <div class="slvz-drop-down-body slvz-button default" onclick="OpenDropDownList(this)">
+            <span>
+                @selectedItem.ToString()
+            </span>
+            <svg class="slvz-arrow" viewBox="0 0 24 24">
+                <path d="M19.7036 12L11.2125 3.27302C10.9236 2.97614 10.9301 2.50131 11.227 2.21246C11.5239 1.9236 11.9987 1.93011 12.2875 2.22698L21.2875 11.477C21.5708 11.7681 21.5708 12.2319 21.2875 12.523L12.2875 21.773C11.9987 22.0699 11.5239 22.0764 11.227 21.7875C10.9301 21.4987 10.9236 21.0239 11.2125 20.727L19.7036 12Z" />
+            </svg>
+        </div>
 
         <div class="slvz-drop-down-list drop-hide">
             <button class='slvz-button @(selectedItem==Items.Item1 ? "pale" : "default")' @onclick='() => ChangeItems(Items.Item1)'>
@@ -41,21 +40,39 @@
         </div>
         <pre>
             <code class="language-razor">
-@("<div class=\"slvz-trackbar\">")
-    @("<div class=\"track\"></div>")
-    @("<div class=\"fill\" style=\"width:@FillWidth;\"></div>")
-    @("<input type=\"range\" min=\"@Min\" max=\"@Max\" step=\"@Steps\" @bind=\"Value\" @oninput=\"OnInput\" />")
+@("<div class=\"slvz-drop-down\">")
+    
+    @("<div class=\"slvz-drop-down-body slvz-button default\" onclick=\"OpenDropDownList(this)\">")
+        @("<span> @selectedItem.ToString() </span>")
+        @("<img src='https://ui.slvz.dev/icons/iOS%20Arrow%20RTL/ic_fluent_ios_arrow_rtl_24_regular.svg'/>") 
+    @("</div>")
+
+    @("<div class=\"slvz-drop-down-list drop-hide\">")
+        @("<button class='slvz-button @(selectedItem==Items.Item1 ? \"pale\" : \"default\")' @onclick='() => ChangeItems(Items.Item1)'>")
+            @("@Items.Item1.ToString()")
+        @("</button>")
+        @("<button class='slvz-button @(selectedItem==Items.Item2 ? \"pale\" : \"default\")' @onclick='() => ChangeItems(Items.Item2)'>")
+            @("@Items.Item2.ToString()")
+        @("</button>")
+        @("<button class='slvz-button @(selectedItem==Items.Item3 ? \"pale\" : \"default\")' @onclick='() => ChangeItems(Items.Item3)'>")
+            @("@Items.Item3.ToString()")
+        @("</button>")
+    @("</div>")
+
 @("</div>")
 
 
 @("@code{")
-    @("private int Value = 0, Steps = 1;")
-    @("private double Min = 0, Max = 100;")
-    @("private string FillWidth => $\"{(((double)Value - Min) / (Max - Min)) * 100}%\";")
-    @("private void OnInput(ChangeEventArgs e)")
+    @("enum Items")
     @("{")
-        @("Value = int.Parse(e.Value?.ToString());")
-        @("//Do something")
+        @("Item1,")
+        @("Item2,")
+        @("Item3")
+    @("}")
+    @("Items selectedItem = Items.Item1;")
+    @("private void ChangeItems(Items item)")
+    @("{")
+        @("selectedItem = item;") 
     @("}")
 @("}")
             </code>

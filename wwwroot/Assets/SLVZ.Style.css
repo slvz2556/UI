@@ -273,23 +273,30 @@
 
 /*=========== Drop down ==============*/
 .slvz-drop-down {
-    display: flex;
     position: relative;
     overflow: visible !important;
     height: 40px;
     width: 180px;
-    border-radius: 5px;
-    padding:0 5px 0 5px;
+    display:flex;
 }
-.slvz-drop-down p{
+.slvz-drop-down-body {
     position:relative;
-    align-self:center;
+    display: flex;   
+    height: 100%;
+    border-radius: 10px;
     flex:1;
+    padding: 0 5px 0 5px;
 }
-.slvz-drop-down .slvz-arrow{
+.slvz-drop-down-body span {
+    position: relative;
+    align-self: center;
+    flex: 1;
+}
+.slvz-drop-down-body .slvz-arrow{
     position:relative;
-    height:20px;
-    width:20px;
+    height:17px;
+    width:17px;
+    transition:.3s !important;
     justify-content:center;
 }
 .slvz-drop-down-list {
@@ -300,11 +307,12 @@
     width: calc(100% - 10px);
     position: absolute;
     left: 0;
-    border-radius: 15px;
+    border-radius: 20px;
     z-index: 10000;
     top: 110%;
     padding: 5px;
     flex-direction: column;
+    gap:5px;
 }
 .drop-show {
     display: flex;
@@ -315,4 +323,7 @@
 .slvz-drop-down-list .slvz-button{
     box-shadow:none;
     width:100%;
+}
+.slvz-drop-down-list .slvz-button.default{
+    background-color:transparent;
 }
