@@ -5,28 +5,26 @@ using System.Globalization;
 
 namespace UI.Components.Shared;
 
-public partial class ColorPicker : ComponentBase, IAsyncDisposable
+public partial class ColorPicker : ComponentBase
 {
-    // ---- Public API -------------------------------------------------
 
+
+
+    // ---- Public API -------------------------------------------------
     /// <summary>Current color as "#rrggbb" (lowercase, 6 digits, no alpha).</summary>
     [Parameter] public string Value { get; set; } = "#ffffff";
     [Parameter] public EventCallback<string> ValueChanged { get; set; }
 
-    /// <summary>Optional row of quick-pick swatches, each "#rrggbb".</summary>
-    [Parameter] public List<string>? PresetColors { get; set; }
 
     // ---- Layout constants (kept in sync with ColorPicker.razor.css) --
-
-    private const double SvWidth = 240;
-    private const double SvHeight = 160;
-    private const double HueWidth = 240;
+    private const double SvWidth = 300;
+    private const double SvHeight = 180;
+    private const double HueWidth = 300;
 
     // ---- Internal state ------------------------------------------------
 
     private ElementReference _svElement;
     private ElementReference _hueElement;
-    private IJSObjectReference? _module;
 
     private double Hue;        // 0-360
     private double Sat = 0;    // 0-1
@@ -35,7 +33,6 @@ public partial class ColorPicker : ComponentBase, IAsyncDisposable
     private int _r = 255, _g = 255, _b = 255;
     private string _hexInputText = "#ffffff";
     private string HexValue = "#ffffff";
-
     private bool _isDraggingSv;
     private bool _isDraggingHue;
     private string? _lastAppliedValue;
@@ -46,34 +43,20 @@ public partial class ColorPicker : ComponentBase, IAsyncDisposable
 
     protected override void OnParametersSet()
     {
-        // Only re-sync from the incoming Value when it actually changed
-        // externally (avoids fighting with our own ValueChanged echo).
         if (!string.Equals(Value, _lastAppliedValue, StringComparison.OrdinalIgnoreCase))
         {
             SyncFromHex(Value);
         }
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            // Small JS helper only used for native pointer capture, so
-            // dragging keeps working even if the pointer leaves the
-            // element bounds mid-drag. Adjust the path below to wherever
-            // you deploy colorPicker.js (e.g. wwwroot/js/colorPicker.js).
-            //_module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/colorPicker.js");
-        }
-    }
-
     // ---- SV square dragging -----------------------------------------
+    // Nothing touches JS until the user actually presses down on this
+    // exact element — no listeners are set up ahead of time anywhere.
 
     private async Task OnSvPointerDown(PointerEventArgs e)
     {
         _isDraggingSv = true;
-        if (_module is not null)
-            await _module.InvokeVoidAsync("capture", _svElement, e.PointerId);
-
+        await Js.InvokeVoidAsync("SLVZColorPicker.capture", _svElement, e.PointerId);
         UpdateSvFromOffsets(e.OffsetX, e.OffsetY);
     }
 
@@ -87,8 +70,7 @@ public partial class ColorPicker : ComponentBase, IAsyncDisposable
     {
         if (!_isDraggingSv) return;
         _isDraggingSv = false;
-        if (_module is not null)
-            await _module.InvokeVoidAsync("release", _svElement, e.PointerId);
+        await Js.InvokeVoidAsync("SLVZColorPicker.release", _svElement, e.PointerId);
     }
 
     private void UpdateSvFromOffsets(double offsetX, double offsetY)
@@ -103,9 +85,7 @@ public partial class ColorPicker : ComponentBase, IAsyncDisposable
     private async Task OnHuePointerDown(PointerEventArgs e)
     {
         _isDraggingHue = true;
-        if (_module is not null)
-            await _module.InvokeVoidAsync("capture", _hueElement, e.PointerId);
-
+        await Js.InvokeVoidAsync("SLVZColorPicker.capture", _hueElement, e.PointerId);
         UpdateHueFromOffset(e.OffsetX);
     }
 
@@ -119,8 +99,7 @@ public partial class ColorPicker : ComponentBase, IAsyncDisposable
     {
         if (!_isDraggingHue) return;
         _isDraggingHue = false;
-        if (_module is not null)
-            await _module.InvokeVoidAsync("release", _hueElement, e.PointerId);
+        await Js.InvokeVoidAsync("SLVZColorPicker.release", _hueElement, e.PointerId);
     }
 
     private void UpdateHueFromOffset(double offsetX)
@@ -205,15 +184,6 @@ public partial class ColorPicker : ComponentBase, IAsyncDisposable
 
         if (notify)
             _ = NotifyValueChanged();
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        if (_module is not null)
-        {
-            try { await _module.DisposeAsync(); }
-            catch (JSDisconnectedException) { /* app is shutting down, safe to ignore */ }
-        }
     }
 
     // ---- Color math --------------------------------------------------

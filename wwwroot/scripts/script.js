@@ -136,13 +136,3 @@ async function CopyCode(btn) {
     }, 1800);
 }
 
-
-
-function capture(element, pointerId) {
-    element.setPointerCapture(pointerId);
-}
-function release(element, pointerId) {
-    if (element.hasPointerCapture(pointerId)) {
-        element.releasePointerCapture(pointerId);
-    }
-}
