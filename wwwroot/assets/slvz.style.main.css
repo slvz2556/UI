@@ -33,12 +33,11 @@
 }
 
 :root {
-    --font-bold: 'ebold';
-    --font-light: 'elight';
-    --font-pr-bold: 'pbold';
-    --font-pr-light: 'plight';
-    --font-jetbrain: 'jetbrainsmono';
-    --font-space: 'spacegrotesk';
+    --font-bold: 'ebold', 'pbold';
+    --font-light: 'elight', 'plight';
+
+    --font-jetbrain: 'jetbrainsmono', 'ebold';
+    --font-space: 'spacegrotesk', 'ebold' ;
     --dialog-backdrop: blur(4px);
     --font-bold-size: 16px;
     --font-light-size: 14.5px;
@@ -327,3 +326,54 @@
 .slvz-drop-down-list .slvz-button.default{
     background-color:transparent;
 }
+
+
+
+
+
+/*=========== Overflow menu ==============*/
+.slvz-overflow-menu {
+    position: relative;
+    overflow: visible !important;
+    height: 40px;
+    aspect-ratio:1;
+    display: flex;
+}
+.slvz-overflow-menu-button {
+    position: relative;
+    display: flex;
+    height: 100%;
+    width:100%;
+    border-radius: 10px;
+}
+.slvz-overflow-menu-button svg,.slvz-overflow-menu-button img{
+    justify-self:center;
+    position:relative;
+    align-self:center;
+    height:20px;
+    width:20px;
+}
+.slvz-overflow-menu-list {
+    background-color: var(--card-background);
+    box-shadow: var(--card-shadow);
+    border-radius: var(--card-radius);
+    height: fit-content;
+    width: calc(100% - 10px);
+    min-width:120px;
+    position: absolute;
+    left: 0;
+    border-radius: 20px;
+    z-index: 10000;
+    top: 110%;
+    padding: 5px;
+    flex-direction: column;
+    gap: 5px;
+}
+.slvz-overflow-menu-list .slvz-button{
+    box-shadow:none;
+    width:100%;
+}
+.slvz-overflow-menu-list .slvz-button.default {
+    background-color: transparent;
+}
+

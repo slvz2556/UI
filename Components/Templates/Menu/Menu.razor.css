@@ -38,3 +38,17 @@ main {
     height: 35px;
     font-family: var(--font-light);
 }
+
+
+.slvz-overflow-menu {
+    margin-top: 20px;
+    width: 40px;
+}
+.slvz-overflow-menu-button span {
+    font-family: var(--font-light);
+    font-size: var(--font-light-size);
+}
+.slvz-overflow-menu-list .slvz-button {
+    height: 35px;
+    font-family: var(--font-light);
+}

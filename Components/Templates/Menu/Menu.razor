@@ -7,7 +7,7 @@
     <h1 style="font-size:25px;" class="title">Drop-Down list</h1>
 
     <div class="slvz-drop-down">
-        <div class="slvz-drop-down-body slvz-button default" onclick="OpenDropDownList(this)">
+        <div class="slvz-drop-down-body slvz-button default" onclick="OpenDropList(this)">
             <span>
                 @selectedItem.ToString()
             </span>
@@ -31,8 +31,6 @@
     </div>
 
 
-
-
     <div class="codeblock">
         <div class="head">
             <span>razor</span>
@@ -41,11 +39,11 @@
         <pre>
             <code class="language-razor">
 @("<div class=\"slvz-drop-down\">")
-    
     @("<div class=\"slvz-drop-down-body slvz-button default\" onclick=\"OpenDropDownList(this)\">")
         @("<span> @selectedItem.ToString() </span>")
         @("<img src='https://ui.slvz.dev/icons/iOS%20Arrow%20RTL/ic_fluent_ios_arrow_rtl_24_regular.svg'/>") 
     @("</div>")
+
 
     @("<div class=\"slvz-drop-down-list drop-hide\">")
         @("<button class='slvz-button @(selectedItem==Items.Item1 ? \"pale\" : \"default\")' @onclick='() => ChangeItems(Items.Item1)'>")
@@ -78,5 +76,84 @@
             </code>
         </pre>
     </div>
+
+
+
+
+
+    <h1 style="font-size:25px; margin-top:50px;" class="title">Overflow menu</h1>
+
+    <div class="slvz-overflow-menu">
+        <div class="slvz-overflow-menu-button slvz-button default" onclick="OpenDropList(this)">
+            <svg viewBox="0 0 20 20">
+                <path d="M6.25 10C6.25 10.6904 5.69036 11.25 5 11.25C4.30964 11.25 3.75 10.6904 3.75 10C3.75 9.30964 4.30964 8.75 5 8.75C5.69036 8.75 6.25 9.30964 6.25 10ZM11.25 10C11.25 10.6904 10.6904 11.25 10 11.25C9.30964 11.25 8.75 10.6904 8.75 10C8.75 9.30964 9.30964 8.75 10 8.75C10.6904 8.75 11.25 9.30964 11.25 10ZM15 11.25C15.6904 11.25 16.25 10.6904 16.25 10C16.25 9.30964 15.6904 8.75 15 8.75C14.3096 8.75 13.75 9.30964 13.75 10C13.75 10.6904 14.3096 11.25 15 11.25Z" />
+            </svg>
+        </div>
+
+        <div class="slvz-overflow-menu-list drop-hide">
+            <button class='slvz-button default' @onclick='() => ChangeItems(Items.Item1)'>
+                @Items.Item1.ToString()
+            </button>
+            <button class='slvz-button default' @onclick='() => ChangeItems(Items.Item2)'>
+                @Items.Item2.ToString()
+            </button>
+            <button class='slvz-button default' @onclick='() => ChangeItems(Items.Item3)'>
+                @Items.Item3.ToString()
+            </button>
+        </div>
+
+    </div>
+
+
+    <div class="codeblock">
+        <div class="head">
+            <span>razor</span>
+            <button class="copy-btn" onclick="CopyCode(this)"><span class="copy-label">Copy</span></button>
+        </div>
+        <pre>
+            <code class="language-razor">
+@("<div class=\"slvz-overflow-menu\">")
+    @("<div class=\"slvz-overflow-menu-button slvz-button default\" onclick=\"OpenDropDownList(this)\">")
+        @("<img src='https://ui.slvz.dev/icons/More%20Horizontal/ic_fluent_more_horizontal_20_regular.svg'/>") 
+    @("</div>")
+
+    @("<div class=\"slvz-overflow-menu-list drop-hide\">")
+        @("<button class='slvz-button default' @onclick='() => ChangeItems(Items.Item1)'>")
+            @("@Items.Item1.ToString()")
+        @("</button>")
+        @("<button class='slvz-button default' @onclick='() => ChangeItems(Items.Item2)'>")
+            @("@Items.Item2.ToString()")
+        @("</button>")
+        @("<button class='slvz-button default' @onclick='() => ChangeItems(Items.Item3)'>")
+            @("@Items.Item3.ToString()")
+        @("</button>")
+    @("</div>")
+
+@("</div>")
+
+
+@("@code{")
+    @("enum Items")
+    @("{")
+        @("Item1,")
+        @("Item2,")
+        @("Item3")
+    @("}")
+
+    @("private void ChangeItems(Items item)")
+    @("{")
+        @("//Do something") 
+    @("}")
+@("}")
+            </code>
+        </pre>
+    </div>
+
+
+
+
+
+
+
 
 </main>
