@@ -126,7 +126,7 @@ body {
 
 .codeblock pre {
     margin: 0;
-    padding: 18px 20px;
+    padding: 8px 8px;
     max-height: 500px;
     overflow: auto;
     scrollbar-width: thin;

@@ -1,43 +1,42 @@
 ﻿@font-face {
-    font-family: 'ebold';
-    src: url('Lato-Bold.ttf') format('truetype');
-    font-weight:500;
+    font-family: 'estedad';
+    src: url('estedad-variable.ttf') format('truetype');
+    font-weight:normal;
 }
 @font-face {
-    font-family: 'elight';
-    src: url('Lato-Light.ttf') format('truetype');
-    font-weight: 350;
-}
-@font-face {
-    font-family: 'pbold';
-    src: url('IRANSans-Medium.ttf') format('truetype');
-    font-weight: 500;
-}
-@font-face {
-    font-family: 'plight';
-    src: url('IRANSans-Light.ttf') format('truetype');
-    font-weight: 350;
-}
-@font-face {
-    font-family: 'consola';
-    src: url('CONSOLA.TTF') format('truetype');
-}
-@font-face {
-    font-family: 'spacegrotesk';
-    src: url('SpaceGrotesk.ttf') format('truetype');
-    font-weight: 350;
+    font-family: 'estedad-bold';
+    src: url('estedad-variable.ttf') format('truetype');
+    font-weight:bold;
 }
 @font-face {
     font-family: 'jetbrainsmono';
-    src: url('JetBrainsMono.ttf') format('truetype');
+    src: url('jetbrainsmono.ttf') format('truetype');
+    font-weight: normal;
+}
+@font-face {
+    font-family: 'sego-ui-bold';
+    src: url('sego.ui.bold.ttf') format('truetype');
+    font-weight: bold;
+}
+@font-face {
+    font-family: 'sego-ui-light';
+    src: url('sego.ui.light.ttf') format('truetype');
+    font-weight: normal;
+}
+@font-face {
+    font-family: 'spacegrotesk';
+    src: url('spacegrotesk.ttf') format('truetype');
+    font-weight: normal;
 }
 
-:root {
-    --font-bold: 'ebold', 'pbold';
-    --font-light: 'elight', 'plight';
 
-    --font-jetbrain: 'jetbrainsmono', 'ebold';
-    --font-spacegrotesk: 'spacegrotesk', 'ebold' ;
+
+:root {
+    --font-bold: 'sego-ui-bold', 'estedad-bold';
+    --font-light: 'sego-ui-light', 'estedad';
+
+    --font-jetbrain: 'jetbrainsmono', 'sego-ui-bold';
+    --font-spacegrotesk: 'spacegrotesk', 'sego-ui-bold' ;
     --dialog-backdrop: blur(4px);
     --font-bold-size: 16px;
     --font-light-size: 14.5px;

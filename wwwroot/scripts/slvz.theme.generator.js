@@ -169,6 +169,7 @@
         localStorage.setItem("Color", color + " " + mode);
 
         if (code) {
+            code.parentElement.parentElement.style.display = "block";
             code.removeAttribute('data-highlighted');
             code.textContent = cssText;
             hljs.highlightAll();
