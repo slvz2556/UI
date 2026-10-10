@@ -25,5 +25,25 @@ public partial class Trackbar
         //Do somthing
     }
 
+    private const string trackBar =
+"""
+<div class="slvz-trackbar">
+    "<div class="track"></div>
+    "<div class="fill" style="width:@FillWidth;"></div>
+    "<input type="range" min="@Min" max="@Max" step="@Steps" @bind="Value" @oninput="OnInput" />")
+@("</div>")
+
+
+@code{
+    private int Value = 0, Steps = 1;
+    private double Min = 0, Max = 100;
+    private string FillWidth => $"{(((double)Value - Min) / (Max - Min)) * 100}%";
+    private void OnInput(ChangeEventArgs e)
+    {")
+        Value = int.Parse(e.Value?.ToString());
+        //Do something")
+    }
+}
+""";
 
 }

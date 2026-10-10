@@ -1,4 +1,5 @@
 ﻿@page "/buttons"
+
 <PageTitle>SLVZ UI | Buttons</PageTitle>
 
 
@@ -10,50 +11,17 @@
 
     <h1 style="font-size:25px; margin-top:40px; " class="title">Primary button</h1>
     <button class="btn slvz-button primary">Primary</button>
-    
-    <div class="codeblock">
-        <div class="head">
-            <span>razor</span>
-            <button class="copy-btn" onclick="CopyCode(this)"><span class="copy-label">Copy</span></button>
-        </div>
-        <pre>
-            <code class="language-razor">
-@("<button class=\"slvz-button primary\">Click me</button>")
-            </code>
-        </pre>
-    </div>
+    <CodeBlock Language="razor" Code="@btnPrimary"/>
 
 
     <h1 style="font-size:25px; margin-top:40px;" class="title">Pale button</h1>
     <button class="btn slvz-button pale">Pale</button>
-
-    <div class="codeblock">
-        <div class="head">
-            <span>razor</span>
-            <button class="copy-btn" onclick="CopyCode(this)"><span class="copy-label">Copy</span></button>
-        </div>
-        <pre>
-            <code class="language-razor">
-@("<button class=\"slvz-button pale\">Click me</button>")
-            </code>
-        </pre>
-    </div>
+    <CodeBlock Language="razor" Code="@btnPale" />
 
 
     <h1 style="font-size:25px; margin-top:40px;" class="title">Default button</h1>
     <button class="btn slvz-button default">Default</button>
-
-    <div class="codeblock">
-        <div class="head">
-            <span>razor</span>
-            <button class="copy-btn" onclick="CopyCode(this)"><span class="copy-label">Copy</span></button>
-        </div>
-        <pre>
-            <code class="language-razor">
-@("<button class=\"slvz-button default\">Click me</button>")
-            </code>
-        </pre>
-    </div>
+    <CodeBlock Language="razor" Code="@btnDefault" />
 
 
     <h1 style="font-size:25px; margin-top:40px; " class="title">Button with icon</h1>
@@ -63,21 +31,8 @@
         </svg>
         Click me
     </button>
-
-    <div class="codeblock">
-        <div class="head">
-            <span>razor</span>
-            <button class="copy-btn" onclick="CopyCode(this)"><span class="copy-label">Copy</span></button>
-        </div>
-        <pre>
-            <code class="language-razor">
-@("<button class=\"slvz-button primary slvz-icon\">")
-    @("<img src='https://ui.slvz.dev/icons/Heart/ic_fluent_heart_20_filled.svg'/>") 
-    @("Click me")
-@("</button>")
-            </code>
-        </pre>
-    </div>
+    <CodeBlock Language="razor" Code="@btnIcon" />
 
 
 </main>
+

@@ -9,4 +9,14 @@ public partial class Cards
         if (firstRender)
             await Js.InvokeVoidAsync("_highlightAll");
     }
+
+    private const string cardPale =
+"""
+<div class=\"slvz-card pale\"></div>
+""";
+
+    private const string cardDefault =
+"""
+<div class=\"slvz-card default\"></div>
+""";
 }

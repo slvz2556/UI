@@ -17,24 +17,25 @@ main {
     font-family: var(--font-jetbrain);
     color: var(--font-bold-color);
 }
-
 .description {
     position: relative;
     width: 100%;
     margin-top: 6px;
     font-size: var(--font-light-size);
-    font-family: var(--font-space);
+    font-family: var(--font-spacegrotesk);
     color: var(--font-light-color);
 }
 
 
 
 .stats {
-    width:calc(100% - (16 * 4)px);
+    position: relative;
+    width: calc(100% - 30px);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(80px, 25%));
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
     gap: 10px;
-    margin-top: 36px;
+    margin-top: 25px;
+    margin-bottom:40px;
 }
 .stat {
     display: flex;
@@ -42,14 +43,14 @@ main {
     gap: 4px;
     padding: 18px 20px;
     border-radius: 20px;
-    background: rgba(255, 255, 255, 0.7);
-    box-shadow: 0 8px 24px rgba(63, 127, 217, 0.08);
 }
 .stat b {
+    color:var(--font-bold-color);
     font-family:var(--font-jetbrain);
     font-size: 22px;
 }
 .stat span {
+    color:var(--font-light-color);
     font-family:var(--font-light);
     font-size: 14px;
     opacity: 0.7;
@@ -58,23 +59,16 @@ main {
 
 
 
-/* ───────── Sections ───────── */
-.block h2 {
-    margin: 0;
-    font-size: 24px;
-}
-
-.sub {
-    margin: 6px 0 20px;
-    opacity: 0.7;
-}
-
+/* ───────── Tools ───────── */
 .grid {
+    position: relative;
+    width: calc(100% - 30px);
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 18px;
+    margin-top:20px;
+    margin-bottom:40px;
 }
-
 .tile {
     display: flex;
     flex-direction: column;
@@ -83,31 +77,56 @@ main {
     border-radius: 24px;
     text-decoration: none;
     color: inherit;
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 8px 24px rgba(63, 127, 217, 0.08);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-
 .tile:hover {
     transform: translateY(-3px);
-    box-shadow: 0 14px 32px rgba(63, 127, 217, 0.16);
+    background-color: var(--card-pale-background);
+    box-shadow: var(--card-pale-shadow); 
 }
-
 .tile h3 {
-    margin: 0;
+    margin: 0;    
+    color:var(--font-bold-color);
+    font-family:var(--font-jetbrain);
     font-size: 18px;
 }
-
 .tile p {
+    color:var(--font-light-color);
+    font-family:var(--font-light);
     margin: 0;
     font-size: 14px;
     line-height: 1.5;
     opacity: 0.75;
 }
-
 .go {
+    color: var(--font-light-color);
+    font-family: var(--font-light);
     margin-top: auto;
     padding-top: 10px;
     font-size: 14px;
     color: var(--primary-color, #3f7fd9);
+}
+
+
+
+
+
+
+/* ───────── Footer ───────── */
+.foot {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    width: calc(100% - 30px);
+    display: flex;
+    justify-content: space-between;
+    padding-top: 24px;
+    color: var(--font-bold-color);
+    font-family: var(--font-spacegrotesk);
+    border-top: 1px solid var(--btn-default-background);
+    font-size: 14px;
+    opacity: 1;
+}
+.foot a {
+    color: var(--primary-color, #3f7fd9);
+    text-decoration: none;
 }

@@ -37,7 +37,7 @@
     --font-light: 'elight', 'plight';
 
     --font-jetbrain: 'jetbrainsmono', 'ebold';
-    --font-space: 'spacegrotesk', 'ebold' ;
+    --font-spacegrotesk: 'spacegrotesk', 'ebold' ;
     --dialog-backdrop: blur(4px);
     --font-bold-size: 16px;
     --font-light-size: 14.5px;
@@ -208,7 +208,7 @@
     background: var(--textbox-background);
     color: var(--font-bold-color) !important;
     fill: var(--font-bold-color) !important;
-    border-radius: 8px;
+    border-radius: 12px;
     display: flex;
     border: none;
     padding: 5px;

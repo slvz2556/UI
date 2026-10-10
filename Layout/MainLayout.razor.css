@@ -37,7 +37,7 @@
 /*Menu*/
 #menu {
     float: left;
-    width: 250px;
+    width: 220px;
     position: fixed;
     height: calc(100vh - 50px);
     transition: .8s;
@@ -165,9 +165,9 @@
 
 .body {
     position: relative;
-    width: calc(100% - 290px);
+    width: calc(100% - 260px);
     height:fit-content;
-    transform:translateX(290px);
+    transform:translateX(260px);
     display:inline-block;
 }
 @media screen and (max-width:800px) {

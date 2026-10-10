@@ -1,4 +1,5 @@
 ﻿@page "/cards"
+@using UI.Components.Shared
 <PageTitle>SLVZ UI | Cards</PageTitle>
 
 
@@ -9,39 +10,15 @@
 
 
 
-
-
-
     <h1 style="font-size:25px; margin-top:40px;" class="title">Default card</h1>
     <div class="card slvz-card default">Default</div>
-
-    <div class="codeblock">
-        <div class="head">
-            <span>html</span>
-            <button class="copy-btn" onclick="CopyCode(this)"><span class="copy-label">Copy</span></button>
-        </div>
-        <pre>
-            <code class="language-html">
-@("<div class=\"slvz-card default\"></div>")
-            </code>
-        </pre>
-    </div>
+    <CodeBlock Language="razor" Code="@cardDefault" />
 
 
     <h1 style="font-size:25px; margin-top:40px;" class="title">Default pale</h1>
     <div class="card slvz-card pale">Pale</div>
-
-    <div class="codeblock">
-        <div class="head">
-            <span>html</span>
-            <button class="copy-btn" onclick="CopyCode(this)"><span class="copy-label">Copy</span></button>
-        </div>
-        <pre>
-            <code class="language-html">
-@("<div class=\"slvz-card pale\"></div>")
-            </code>
-        </pre>
-    </div>
+    <CodeBlock Language="razor" Code="@cardPale" />
 
 
 </main>
+

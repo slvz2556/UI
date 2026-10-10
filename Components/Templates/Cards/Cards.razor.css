@@ -21,9 +21,9 @@ main {
     width: 100%;
     margin-top: 6px;
     font-size: var(--font-light-size);
-    font-family: var(--font-space);
+    font-family: var(--font-spacegrotesk);
     color: var(--font-light-color);
-}
+} 
 
 
 .card {
