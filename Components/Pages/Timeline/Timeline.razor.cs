@@ -16,5 +16,15 @@ public partial class Timeline
         }
     }
 
-    
+    private async void ExportCode()
+    {
+        var model = await Js.InvokeAsync<CodeStructure>("TimelineStudio.buildExport");
+        exportCode.ShowDialog(model.Html, model.Css);
+    }
+
+    class CodeStructure
+    {
+        public string Css { get; set; }
+        public string Html { get; set; }        
+    }
 }

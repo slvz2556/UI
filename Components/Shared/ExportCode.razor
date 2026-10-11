@@ -1,0 +1,63 @@
+﻿@if (exportCode.Visibility)
+{
+    <div class="slvz-dialog">
+
+        <div class="slvz-dialog-body">
+
+            <header>
+
+                <h3>
+                    <button @onclick="exportCode.CloseDialog" class="slvz-button default btn-close">
+                        <svg viewBox="0 0 20 20">
+                            <path d="M10.67,10l6.74-6.74c.19-.19.19-.49,0-.67-.19-.19-.49-.19-.67,0l-6.74,6.74L3.26,2.59c-.19-.19-.49-.19-.67,0-.19.19-.19.49,0,.67l6.74,6.74-6.74,6.74c-.19.19-.19.49,0,.67s.49.19.67,0l6.74-6.74,6.74,6.74c.19.19.49.19.67,0s.19-.49,0-.67l-6.74-6.74Z" />
+                        </svg>
+                    </button>
+                    Export
+                </h3>
+
+
+                <div class="tabs">
+                    <button class='slvz-button @(exportCode.language == Languages.Html ? "primary" : "")' @onclick="() => exportCode.ChangeLanguage(Languages.Html)">HTML</button>
+                    <button class='slvz-button @(exportCode.language == Languages.Css ? "primary" : "")' @onclick="() => exportCode.ChangeLanguage(Languages.Css)">CSS</button>
+                </div>
+
+            </header>
+
+            <div class="code">
+
+                @if (exportCode.language == Languages.Html)
+                {
+                    <div class="codeblock">
+                        <div class="head">
+                            <span>html</span>
+                            <button class="copy-btn" onclick="CopyCode(this)"><span class="copy-label">Copy</span></button>
+                        </div>
+                        <pre>
+                            <code class="language-html">
+                        @exportCode.Html  
+                            </code>
+                        </pre>
+                    </div>
+                }
+                else
+                {
+                    <div class="codeblock">
+                        <div class="head">
+                            <span>css</span>
+                            <button class="copy-btn" onclick="CopyCode(this)"><span class="copy-label">Copy</span></button>
+                        </div>
+                        <pre>
+                            <code class="language-css">
+                        @exportCode.Css  
+                            </code>
+                        </pre>
+                    </div>
+                }
+
+
+            </div>
+
+        </div>
+
+    </div>
+}

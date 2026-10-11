@@ -376,3 +376,28 @@
     background-color: transparent;
 }
 
+
+
+
+
+
+
+/*=========== Dialog ==============*/
+.slvz-dialog {
+    background: var(--dialog-container-background);
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99999;
+    display: grid;
+    overflow:visible;
+    top: 0;
+    left: 0;
+}
+.slvz-dialog .slvz-dialog-body {
+    justify-self:center;
+    align-self:center;
+    border: var(--dialog-border);
+    box-shadow: var(--dialog-shadow);
+    background: var(--dialog-background);
+}

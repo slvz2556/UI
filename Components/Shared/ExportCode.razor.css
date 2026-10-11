@@ -1,0 +1,90 @@
+.slvz-dialog-body
+{
+    position:relative;
+    width:calc(100% - 30px);
+    max-width:600px;
+    border-radius:15px;
+    display:flex;
+    flex-direction:column;
+    height:100%;
+    max-height:500px;
+    padding:5px 0 10px 0;
+}
+
+header{
+    position:relative;
+    display:flex;
+    height:40px;
+    width:100%;
+    padding:0 10px 0 10px;
+    justify-content:space-between;
+}
+header h3{
+    display:flex;
+    width:fit-content;
+    gap:10px;
+    align-content:center;
+    align-items:center;
+    font-family:var(--font-jetbrain );
+    color:var(--font-light-color);
+    font-size:var(--font-light-size);
+}
+.btn-close{
+    height:36px;
+    width:36px;
+    position:relative;
+    border-radius:10px;
+    display:grid;
+    justify-content:center;
+    align-content:center;
+}
+.btn-close svg{
+    position:relative;
+    height:20px;
+    width:20px;
+}
+.tabs {
+    width: fit-content;
+    padding: 2px;
+    border-radius: var(--btn-default-radius);
+    display: flex;
+    align-self: center;
+    gap: 6px;
+    transform:translateX(-15px);
+    background: var(--btn-default-background);
+    box-shadow: var(--btn-default-shadow);
+    border-radius: var(--btn-default-radius);
+}
+.tabs .slvz-button {
+    font-family: var(--font-jetbrain);
+    font-size: 12px;
+    width: 40px;
+    height: 30px;
+    color: var(--btn-default-text-color);
+    border-radius: var(--btn-default-radius);
+    padding: 6px 12px;
+}
+.tabs .slvz-button.active {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+
+.code{
+    width: calc(100% - 20px);
+    padding:0 10px 0 10px;
+    position:relative;
+    flex:1;
+    margin-top:10px;
+}
+
+
+.codeblock {
+    margin-top: 0;
+    height: 100%;
+    width: 100%;
+    max-height: 450px !important;
+}
+.codeblock pre{
+    height:calc(100% - 52px);
+}

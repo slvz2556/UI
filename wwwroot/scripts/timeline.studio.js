@@ -270,7 +270,6 @@
     let inspectorEl;
     let timelineScrollInner;
     let tracksScrollEl;
-    let syncingScroll = false;
 
     function renderElList() {
         elListEl.innerHTML = '';
@@ -419,6 +418,7 @@
             tracksAreaEl.appendChild(msg);
             renderRuler();
             positionPlayhead();
+            syncLabels();
             return;
         }
 
@@ -478,6 +478,15 @@
 
         renderRuler();
         positionPlayhead();
+        syncLabels();
+    }
+
+    // Extra room under the labels (>= the horizontal scrollbar) so they can always reach the same scrollTop as the rows.
+    function syncLabels() {
+        const pad = document.createElement('div');
+        pad.style.cssText = 'height:16px;';
+        trackLabelsEl.appendChild(pad);
+        trackLabelsEl.scrollTop = tracksScrollEl.scrollTop;
     }
 
     function positionPlayhead() {
@@ -738,7 +747,6 @@
     function buildExport() {
         let css = '';
         let html = '';
-        let notes = [];
         state.elements.forEach((el, i) => {
             const keys = Object.keys(el.tracks);
             if (!keys.length) { return; }
@@ -777,13 +785,10 @@
             css += `@keyframes ${className}-anim {\n${keyframeBlocks}}\n\n`;
             css += `.${className} {\n  position: absolute;\n  top: 0; left: 0;\n  width: ${el.tracks.width ? el.tracks.width.keyframes[0].value : 100}px;\n  height: ${el.tracks.height ? el.tracks.height.keyframes[0].value : 100}px;\n  background: ${el.color};\n  animation: ${className}-anim ${span}ms ${anyLoop ? 'infinite' : '1'} both;\n  animation-delay: ${startTime}ms;\n}\n\n`;
             html += `  <div class="${className}"></div>\n`;
-            if (anyLoop && keys.some(k => !el.tracks[k].loop)) {
-                notes.push(`"${el.name}": some properties loop and some don't — since they're merged into one CSS animation, the whole element currently loops.`);
-            }
         });
 
-        const fullHtml = `<!-- Timeline Studio export -->\n<div class="ts-stage" style="position:relative; width:${state.stage.width}px; height:${state.stage.height}px; perspective:1000px;">\n${html}</div>\n\n<style>\n${css}</style>`;
-        return { code: fullHtml, notes };
+        //const fullHtml = `<!-- Timeline Studio export -->\n<div class="ts-stage" style="position:relative; width:${state.stage.width}px; height:${state.stage.height}px; perspective:1000px;">\n${html}</div>\n\n<style>\n${css}</style>`;
+        return { html: `<div class="ts-stage" style="position:relative; width:${state.stage.width}px; height:${state.stage.height}px; perspective:1000px;">\n${html}</div>`, css: css };
     }
 
     // Shrinks the studio by however much its page/scroll-parents overflow (host padding, margins, siblings),
@@ -839,16 +844,13 @@
         let hovering = false;
         canvasWrapEl.addEventListener('pointerenter', () => { hovering = true; });
         canvasWrapEl.addEventListener('pointerleave', () => { hovering = false; });
-        tracksScrollEl.addEventListener('scroll', () => {
-            if (syncingScroll) return; syncingScroll = true;
-            trackLabelsEl.scrollTop = tracksScrollEl.scrollTop;
-            syncingScroll = false;
-        });
-        trackLabelsEl.addEventListener('scroll', () => {
-            if (syncingScroll) return; syncingScroll = true;
-            tracksScrollEl.scrollTop = trackLabelsEl.scrollTop;
-            syncingScroll = false;
-        });
+        // One-way sync: the keyframe area is the only thing the user scrolls; the labels just follow it.
+        // (Two-way syncing raced against smooth scrolling and made the rows jump.)
+        tracksScrollEl.addEventListener('scroll', () => { trackLabelsEl.scrollTop = tracksScrollEl.scrollTop; });
+        trackLabelsEl.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            tracksScrollEl.scrollTop += e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+        }, { passive: false });
 
         rulerEl.addEventListener('mousedown', (e) => {
             scrub(e);
@@ -931,20 +933,6 @@
                 kf.bezier[i] = parseFloat($(id).value) || 0;
                 save();
             });
-        });
-
-        $('exportBtn').addEventListener('click', () => {
-            const { code, notes } = buildExport();
-            $('modalCode').textContent = code || '/* Create an element with at least one animated property first */';
-            $('exportNote').textContent = notes.join(' ');
-            $('modalBg').classList.add('show');
-        });
-        $('modalCloseBtn').addEventListener('click', () => $('modalBg').classList.remove('show'));
-        $('modalBg').addEventListener('click', (e) => { if (e.target.id === 'modalBg') e.currentTarget.classList.remove('show'); });
-        $('copyBtn').addEventListener('click', async () => {
-            const text = $('modalCode').textContent;
-            try { await navigator.clipboard.writeText(text); const btn = $('copyBtn'); const old = btn.textContent; btn.textContent = 'Copied ✓'; setTimeout(() => btn.textContent = old, 1200); }
-            catch (e) { /* clipboard blocked - user can select manually */ }
         });
 
         canvasWrapEl.addEventListener('click', (e) => {
@@ -1047,5 +1035,5 @@
         window.addEventListener('resize', fit);
     }
 
-    return { addElement, init, fit };
+    return { addElement, init, fit, buildExport };
 })();
