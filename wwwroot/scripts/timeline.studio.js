@@ -1,5 +1,9 @@
 ﻿window.TimelineStudio = (function () {
 
+    // Everything is looked up inside the studio's own <main>, so ids can't clash with the host page.
+    let root = null;
+    const $ = (id) => root.querySelector('#' + id);
+
     const TRACK_DEFS = {
         x: { label: 'X', unit: 'px', def: 0, color: 'var(--track-x)', kind: 'transform', core: true },
         y: { label: 'Y', unit: 'px', def: 0, color: 'var(--track-y)', kind: 'transform', core: true },
@@ -13,8 +17,26 @@
         borderRadius: { label: 'Corner radius', unit: 'px', def: 0, color: 'var(--track-borderRadius)', kind: 'style' },
         color: { label: 'Color', unit: '', def: '#ff7a45', color: 'var(--track-color)', kind: 'color' },
     };
-    const PALETTE = ['#ff7a45', '#7aa2ff', '#62d99b', '#ffd166', '#c792ea', '#4dd0e1', '#f48fb1', '#a7e07a'];
-    const STAGE_PRESETS = { '480p': [854, 480], '720p': [1280, 720], '1080p': [1920, 1080] };
+    let PALETTE = ['#6742bc', '#bc4274', '#42bc8a', '#bc9c42', '#4274bc', '#8abc42', '#bc5a42', '#42a8bc'];
+    function hslToHex(h, s, l) {
+        s /= 100; l /= 100;
+        const k = n => (n + h / 30) % 12;
+        const a = s * Math.min(l, 1 - l);
+        const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+        const x = v => Math.round(255 * v).toString(16).padStart(2, '0');
+        return '#' + x(f(0)) + x(f(8)) + x(f(4));
+    }
+    // Builds the element colour palette from the host project's --primary-hue/--primary-sat/--primary-light.
+    function buildPalette() {
+        const cs = getComputedStyle(root);
+        const h = parseFloat(cs.getPropertyValue('--primary-hue'));
+        const s = parseFloat(cs.getPropertyValue('--primary-sat'));
+        const l = parseFloat(cs.getPropertyValue('--primary-light'));
+        if (isNaN(h)) return;
+        const sat = Math.max(isNaN(s) ? 55 : s, 55), lig = isNaN(l) ? 50 : Math.min(Math.max(l, 42), 58);
+        PALETTE = [0, 45, 90, 150, 200, 250, 300, 340].map(o => hslToHex((h + o) % 360, sat, lig));
+    }
+    const STAGE_MAX = 1500; // max stage width/height in px
 
     let state = {
         duration: 5000,
@@ -25,7 +47,7 @@
         selectedKfIndex: null,
         nextId: 1,
         playing: false,
-        stage: { width: 854, height: 480, preset: '480p' },
+        stage: { width: 854, height: 480 },
         canvasZoom: 1,
         canvasPan: { x: 0, y: 0 },
     };
@@ -158,7 +180,7 @@
         if (el.tracks[trackKey]) return;
         const def = TRACK_DEFS[trackKey];
         el.tracks[trackKey] = {
-            keyframes: [{ time: state.playhead, value: def.def, easing: 'linear' }],
+            keyframes: [{ time: state.playhead, value: def.kind === 'color' ? el.color : def.def, easing: 'linear' }],
             loop: false, isColor: def.kind === 'color'
         };
         renderAll(); save();
@@ -201,9 +223,50 @@
     let trackLabelsEl;
     let tracksAreaEl;
     let rulerEl;
-    let playheadEl;
+    let playheadEl, playheadHeadEl;
     let timeLabelEl;
     let trackSelectEl;
+    let trackSelectDD, easingDD;
+    const dropdowns = [];
+
+    // Dropdown with its own .ts-dropdown classes (no clash with host styles). Mimics a <select>: .value, setOptions(), onChange.
+    const ARROW_SVG = '<svg class="ts-dropdown-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    function clampStage(v, fallback) {
+        const n = parseInt(v);
+        return Math.min(STAGE_MAX, Math.max(10, isNaN(n) ? fallback : n));
+    }
+    function Dropdown(host, onChange) {
+        host.classList.add('ts-dropdown');
+        host.innerHTML = '<div class="ts-dropdown-body"><span></span>' + ARROW_SVG + '</div><div class="ts-dropdown-list ts-hide"></div>';
+        const body = host.children[0], label = body.querySelector('span'), list = host.children[1];
+        const dd = {
+            host, options: [], _value: '', placeholder: '',
+            get value() { return this._value; },
+            set value(v) {
+                this._value = v;
+                const o = this.options.find(x => x.value === v);
+                label.textContent = o ? o.label : this.placeholder;
+                list.querySelectorAll('button').forEach(b => b.classList.toggle('selected', b.dataset.value === v));
+            },
+            setOptions(opts, placeholder) {
+                this.options = opts; this.placeholder = placeholder || '';
+                list.innerHTML = '';
+                opts.forEach(o => {
+                    const b = document.createElement('button');
+                    b.type = 'button'; b.className = 'ts-dropdown-item'; b.dataset.value = o.value; b.textContent = o.label;
+                    b.addEventListener('click', (e) => { e.stopPropagation(); this.value = o.value; this.close(); if (onChange) onChange(o.value); });
+                    list.appendChild(b);
+                });
+                host.classList.toggle('disabled', opts.length === 0);
+                this.value = opts.some(x => x.value === this._value) ? this._value : (opts[0] ? opts[0].value : '');
+            },
+            open() { dropdowns.forEach(d => { if (d !== dd) d.close(); }); host.classList.add('open'); list.classList.replace('ts-hide', 'ts-show'); },
+            close() { host.classList.remove('open'); list.classList.replace('ts-show', 'ts-hide'); },
+        };
+        body.addEventListener('click', () => { host.classList.contains('open') ? dd.close() : dd.open(); });
+        dropdowns.push(dd);
+        return dd;
+    }
     let inspectorEl;
     let timelineScrollInner;
     let tracksScrollEl;
@@ -312,19 +375,14 @@
 
     function renderTrackSelect() {
         const el = selectedEl();
-        trackSelectEl.innerHTML = '';
         const available = Object.keys(TRACK_DEFS).filter(k => !el || !el.tracks[k]);
         if (!el || available.length === 0) {
-            const opt = document.createElement('option'); opt.textContent = el ? 'All properties added' : 'Select an element first';
-            trackSelectEl.appendChild(opt);
-            document.getElementById('addTrackBtn').disabled = true;
+            trackSelectDD.setOptions([], el ? 'All properties added' : 'Select an element first');
+            $('addTrackBtn').disabled = true;
             return;
         }
-        document.getElementById('addTrackBtn').disabled = false;
-        available.forEach(k => {
-            const opt = document.createElement('option'); opt.value = k; opt.textContent = TRACK_DEFS[k].label;
-            trackSelectEl.appendChild(opt);
-        });
+        $('addTrackBtn').disabled = false;
+        trackSelectDD.setOptions(available.map(k => ({ value: k, label: TRACK_DEFS[k].label })));
     }
 
     function timeToPx(t) { return t * PX_PER_MS; }
@@ -349,7 +407,7 @@
         const el = selectedEl();
         trackLabelsEl.innerHTML = ''; tracksAreaEl.innerHTML = '';
         const rulerSpacer = document.createElement('div');
-        rulerSpacer.style.cssText = 'height:24px;flex:0 0 auto;border-bottom:1px solid var(--line);';
+        rulerSpacer.style.cssText = 'height:24px;position:sticky;top:0;z-index:3;background:var(--card-background);border-bottom:1px solid var(--line);';
         trackLabelsEl.appendChild(rulerSpacer);
         const totalPx = timeToPx(state.duration);
         tracksAreaEl.style.width = totalPx + 'px';
@@ -424,6 +482,7 @@
 
     function positionPlayhead() {
         playheadEl.style.left = timeToPx(state.playhead) + 'px';
+        playheadHeadEl.style.left = (timeToPx(state.playhead) - 5) + 'px';
         timeLabelEl.textContent = Math.round(state.playhead) + ' / ' + state.duration + 'ms';
     }
 
@@ -436,19 +495,19 @@
         const kf = track.keyframes[state.selectedKfIndex];
         if (!kf) { inspectorEl.classList.remove('show'); return; }
         inspectorEl.classList.add('show');
-        document.getElementById('kfTime').value = kf.time;
-        document.getElementById('kfEasing').value = kf.easing || 'linear';
+        $('kfTime').value = kf.time;
+        easingDD.value = kf.easing || 'linear';
         const isColor = track.isColor;
-        document.getElementById('kfColorRow').style.display = isColor ? 'flex' : 'none';
-        document.getElementById('kfValueNum').closest('.row').style.display = isColor ? 'none' : 'flex';
-        if (isColor) { document.getElementById('kfValueColor').value = kf.value; }
-        else { document.getElementById('kfValueNum').value = kf.value; }
-        document.getElementById('kfBezierRow').style.display = kf.easing === 'custom' ? 'flex' : 'none';
+        $('kfColorRow').style.display = isColor ? 'flex' : 'none';
+        $('kfValueNum').closest('.row').style.display = isColor ? 'none' : 'flex';
+        if (isColor) { $('kfValueColor').value = kf.value; }
+        else { $('kfValueNum').value = kf.value; }
+        $('kfBezierRow').style.display = kf.easing === 'custom' ? 'flex' : 'none';
         if (kf.bezier) {
-            document.getElementById('bz1').value = kf.bezier[0];
-            document.getElementById('bz2').value = kf.bezier[1];
-            document.getElementById('bz3').value = kf.bezier[2];
-            document.getElementById('bz4').value = kf.bezier[3];
+            $('bz1').value = kf.bezier[0];
+            $('bz2').value = kf.bezier[1];
+            $('bz3').value = kf.bezier[2];
+            $('bz4').value = kf.bezier[3];
         }
     }
 
@@ -659,7 +718,7 @@
     let rafId = null, lastTs = null;
     function togglePlay() {
         state.playing = !state.playing;
-        const btn = document.getElementById('playBtn');
+        const btn = $('playBtn');
         btn.classList.remove('playing', 'paused');
         btn.classList.add(state.playing ? 'playing' : 'paused');
         if (state.playing) { lastTs = null; rafId = requestAnimationFrame(loop); }
@@ -727,31 +786,59 @@
         return { code: fullHtml, notes };
     }
 
+    // Shrinks the studio by however much its page/scroll-parents overflow (host padding, margins, siblings),
+    // so a `height:100vh` main never makes the page scroll. Re-runs on window resize.
+    function fit() {
+        if (!root) return;
+        if (root.dataset.tsBaseHeight === undefined) root.dataset.tsBaseHeight = root.style.height;
+        root.style.height = root.dataset.tsBaseHeight;
+        const scrollers = [document.scrollingElement || document.documentElement];
+        for (let n = root.parentElement; n && n !== document.body && n !== document.documentElement; n = n.parentElement) {
+            const o = getComputedStyle(n).overflowY;
+            if (o === 'auto' || o === 'scroll') scrollers.push(n);
+        }
+        let excess = 0;
+        scrollers.forEach(s => { excess = Math.max(excess, s.scrollHeight - s.clientHeight); });
+        if (excess > 0) root.style.height = Math.max(320, root.offsetHeight - excess) + 'px';
+    }
+
+    // Blazor CSS isolation only styles elements that carry the component's b-xxxx attribute.
+    // Nodes this script creates don't have it, so copy it onto everything added under the root.
+    function adoptScopeAttr() {
+        const attr = root.getAttributeNames().find(n => /^b-[a-z0-9]+$/.test(n));
+        if (!attr) return;
+        const tag = (n) => { if (n.nodeType === 1) { n.setAttribute(attr, ''); n.querySelectorAll('*').forEach(c => c.setAttribute(attr, '')); } };
+        new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(tag))).observe(root, { childList: true, subtree: true });
+    }
+
     // ---------- DOM binding (deferred until init() is called) ----------
     function bindDom() {
-        elListEl = document.getElementById('elList');
-        canvasEl = document.getElementById('canvas');
-        trackLabelsEl = document.getElementById('trackLabels');
-        tracksAreaEl = document.getElementById('tracksArea');
-        rulerEl = document.getElementById('ruler');
-        playheadEl = document.getElementById('playhead');
-        timeLabelEl = document.getElementById('timeLabel');
-        trackSelectEl = document.getElementById('trackSelect');
-        inspectorEl = document.getElementById('inspector');
-        timelineScrollInner = document.getElementById('timelineScrollInner');
-        tracksScrollEl = document.getElementById('tracksScroll');
-        guidesEl = document.getElementById('guides');
-        stagePresetEl = document.getElementById('stagePreset');
-        stageWEl = document.getElementById('stageW');
-        stageHEl = document.getElementById('stageH');
-        zoomLabelEl = document.getElementById('zoomLabel');
-        canvasWrapEl = document.getElementById('canvasWrap');
+        elListEl = $('elList');
+        canvasEl = $('canvas');
+        trackLabelsEl = $('trackLabels');
+        tracksAreaEl = $('tracksArea');
+        rulerEl = $('ruler');
+        playheadEl = $('playhead');
+        playheadHeadEl = $('playheadHead').firstElementChild;
+        timeLabelEl = $('timeLabel');
+        trackSelectEl = $('trackSelect');
+        inspectorEl = $('inspector');
+        timelineScrollInner = $('timelineScrollInner');
+        tracksScrollEl = $('tracksScroll');
+        guidesEl = $('guides');
+        stageWEl = $('stageW');
+        stageHEl = $('stageH');
+        zoomLabelEl = $('zoomLabel');
+        canvasWrapEl = $('canvasWrap');
     }
 
     // ---------- events (deferred until init() is called) ----------
     function bindEvents() {
         let suppressNextCanvasClick = false;
         let spaceHeld = false;
+        let hovering = false;
+        canvasWrapEl.addEventListener('pointerenter', () => { hovering = true; });
+        canvasWrapEl.addEventListener('pointerleave', () => { hovering = false; });
         tracksScrollEl.addEventListener('scroll', () => {
             if (syncingScroll) return; syncingScroll = true;
             trackLabelsEl.scrollTop = tracksScrollEl.scrollTop;
@@ -771,30 +858,24 @@
             document.addEventListener('mouseup', onUp);
         });
 
-        document.getElementById('addBtn').addEventListener('click', addElement);
-        document.getElementById('playBtn').addEventListener('click', togglePlay);
-        document.getElementById('durationInput').addEventListener('change', (e) => {
+        $('addBtn').addEventListener('click', addElement);
+        $('playBtn').addEventListener('click', togglePlay);
+        $('durationInput').addEventListener('change', (e) => {
             state.duration = Math.max(500, parseInt(e.target.value) || 5000);
             if (state.playhead > state.duration) state.playhead = state.duration;
             renderAll(); save();
         });
 
-        stagePresetEl.addEventListener('change', () => {
-            const val = stagePresetEl.value;
-            state.stage.preset = val;
-            if (STAGE_PRESETS[val]) {
-                state.stage.width = STAGE_PRESETS[val][0];
-                state.stage.height = STAGE_PRESETS[val][1];
-                stageWEl.value = state.stage.width;
-                stageHEl.value = state.stage.height;
-            }
-            renderCanvas(); save();
-        });
+        trackSelectDD = Dropdown(trackSelectEl);
+        easingDD = Dropdown($('kfEasing'), onEasingChange);
+        easingDD.setOptions(['linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out'].map(v => ({ value: v, label: v })).concat([{ value: 'custom', label: 'Custom (cubic-bezier)' }]));
+        document.addEventListener('pointerdown', (e) => { dropdowns.forEach(d => { if (!d.host.contains(e.target)) d.close(); }); });
+
         function onStageDimInput() {
-            state.stage.width = Math.max(10, parseInt(stageWEl.value) || state.stage.width);
-            state.stage.height = Math.max(10, parseInt(stageHEl.value) || state.stage.height);
-            state.stage.preset = 'custom';
-            stagePresetEl.value = 'custom';
+            state.stage.width = clampStage(stageWEl.value, state.stage.width);
+            state.stage.height = clampStage(stageHEl.value, state.stage.height);
+            stageWEl.value = state.stage.width;
+            stageHEl.value = state.stage.height;
             renderCanvas(); save();
         }
         stageWEl.addEventListener('change', onStageDimInput);
@@ -806,18 +887,18 @@
             applyStageSize();
             save();
         }
-        document.getElementById('zoomInBtn').addEventListener('click', () => setZoom(state.canvasZoom + 0.1));
-        document.getElementById('zoomOutBtn').addEventListener('click', () => setZoom(state.canvasZoom - 0.1));
-        document.getElementById('zoomResetBtn').addEventListener('click', () => {
+        $('zoomInBtn').addEventListener('click', () => setZoom(state.canvasZoom + 0.1));
+        $('zoomOutBtn').addEventListener('click', () => setZoom(state.canvasZoom - 0.1));
+        $('zoomResetBtn').addEventListener('click', () => {
             state.canvasPan.x = 0; state.canvasPan.y = 0;
             setZoom(1);
         });
 
-        document.getElementById('addTrackBtn').addEventListener('click', () => {
-            if (trackSelectEl.value) addTrackToSelected(trackSelectEl.value);
+        $('addTrackBtn').addEventListener('click', () => {
+            if (trackSelectDD.value) addTrackToSelected(trackSelectDD.value);
         });
-        document.getElementById('deleteKfBtn').addEventListener('click', deleteSelectedKeyframe);
-        document.getElementById('kfTime').addEventListener('change', (e) => {
+        $('deleteKfBtn').addEventListener('click', deleteSelectedKeyframe);
+        $('kfTime').addEventListener('change', (e) => {
             const el = selectedEl(); const track = el.tracks[state.selectedTrack];
             const kf = track.keyframes[state.selectedKfIndex];
             kf.time = Math.max(0, Math.min(state.duration, parseFloat(e.target.value) || 0));
@@ -825,44 +906,44 @@
             state.selectedKfIndex = track.keyframes.indexOf(kf);
             renderAll(); save();
         });
-        document.getElementById('kfValueNum').addEventListener('change', (e) => {
+        $('kfValueNum').addEventListener('change', (e) => {
             const el = selectedEl(); const track = el.tracks[state.selectedTrack];
             track.keyframes[state.selectedKfIndex].value = parseFloat(e.target.value) || 0;
             renderAll(); save();
         });
-        document.getElementById('kfValueColor').addEventListener('change', (e) => {
+        $('kfValueColor').addEventListener('change', (e) => {
             const el = selectedEl(); const track = el.tracks[state.selectedTrack];
             track.keyframes[state.selectedKfIndex].value = e.target.value;
             renderAll(); save();
         });
-        document.getElementById('kfEasing').addEventListener('change', (e) => {
+        function onEasingChange(v) {
             const el = selectedEl(); const track = el.tracks[state.selectedTrack];
             const kf = track.keyframes[state.selectedKfIndex];
-            kf.easing = e.target.value;
+            kf.easing = v;
             if (kf.easing === 'custom' && !kf.bezier) kf.bezier = [0.25, 0.1, 0.25, 1];
             renderInspector(); save();
-        });
+        }
         ['bz1', 'bz2', 'bz3', 'bz4'].forEach((id, i) => {
-            document.getElementById(id).addEventListener('change', () => {
+            $(id).addEventListener('change', () => {
                 const el = selectedEl(); const track = el.tracks[state.selectedTrack];
                 const kf = track.keyframes[state.selectedKfIndex];
                 if (!kf.bezier) kf.bezier = [0.25, 0.1, 0.25, 1];
-                kf.bezier[i] = parseFloat(document.getElementById(id).value) || 0;
+                kf.bezier[i] = parseFloat($(id).value) || 0;
                 save();
             });
         });
 
-        document.getElementById('exportBtn').addEventListener('click', () => {
+        $('exportBtn').addEventListener('click', () => {
             const { code, notes } = buildExport();
-            document.getElementById('modalCode').textContent = code || '/* Create an element with at least one animated property first */';
-            document.getElementById('exportNote').textContent = notes.join(' ');
-            document.getElementById('modalBg').classList.add('show');
+            $('modalCode').textContent = code || '/* Create an element with at least one animated property first */';
+            $('exportNote').textContent = notes.join(' ');
+            $('modalBg').classList.add('show');
         });
-        document.getElementById('modalCloseBtn').addEventListener('click', () => document.getElementById('modalBg').classList.remove('show'));
-        document.getElementById('modalBg').addEventListener('click', (e) => { if (e.target.id === 'modalBg') e.currentTarget.classList.remove('show'); });
-        document.getElementById('copyBtn').addEventListener('click', async () => {
-            const text = document.getElementById('modalCode').textContent;
-            try { await navigator.clipboard.writeText(text); const btn = document.getElementById('copyBtn'); const old = btn.textContent; btn.textContent = 'Copied ✓'; setTimeout(() => btn.textContent = old, 1200); }
+        $('modalCloseBtn').addEventListener('click', () => $('modalBg').classList.remove('show'));
+        $('modalBg').addEventListener('click', (e) => { if (e.target.id === 'modalBg') e.currentTarget.classList.remove('show'); });
+        $('copyBtn').addEventListener('click', async () => {
+            const text = $('modalCode').textContent;
+            try { await navigator.clipboard.writeText(text); const btn = $('copyBtn'); const old = btn.textContent; btn.textContent = 'Copied ✓'; setTimeout(() => btn.textContent = old, 1200); }
             catch (e) { /* clipboard blocked - user can select manually */ }
         });
 
@@ -875,15 +956,15 @@
             renderAll();
         });
 
-        // ---------- Alt + scroll to zoom toward the cursor (Adobe-style) ----------
+        // ---------- Alt+scroll, Ctrl+scroll or trackpad pinch (= ctrl+wheel) zoom the scene toward the cursor ----------
         canvasWrapEl.addEventListener('wheel', (e) => {
-            if (!e.altKey) return;
-            e.preventDefault();
+            if (!(e.altKey || e.ctrlKey || e.metaKey)) return;
+            e.preventDefault(); // also stops the browser from zooming the whole page
             const rect = canvasWrapEl.getBoundingClientRect();
             const wrapCenterX = rect.left + rect.width / 2, wrapCenterY = rect.top + rect.height / 2;
             const oldZoom = state.canvasZoom;
-            const step = oldZoom * 0.12;
-            const newZoom = Math.max(0.1, Math.min(3, Math.round((oldZoom + (e.deltaY < 0 ? step : -step)) * 100) / 100));
+            const dy = Math.max(-200, Math.min(200, e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY));
+            const newZoom = Math.max(0.1, Math.min(3, Math.round(oldZoom * Math.exp(-dy * (e.ctrlKey ? 0.01 : 0.0015)) * 1000) / 1000));
             if (newZoom === oldZoom) return;
             const offsetX = e.clientX - wrapCenterX - state.canvasPan.x;
             const offsetY = e.clientY - wrapCenterY - state.canvasPan.y;
@@ -897,7 +978,7 @@
 
         // ---------- Space + drag to pan (like Photoshop/Illustrator) ----------
         document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space' && !spaceHeld) {
+            if (e.code === 'Space' && !spaceHeld && hovering) {
                 const tag = (document.activeElement && document.activeElement.tagName) || '';
                 if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
                 e.preventDefault();
@@ -943,21 +1024,28 @@
     // Call window.TimelineStudio.init() yourself once the markup is in the DOM
     // (e.g. from Blazor's OnAfterRenderAsync via JS interop). Nothing in this
     // file touches the DOM or reads/writes time-related state until init() runs.
-    function init() {
+    function init(rootEl) {
+        root = rootEl || document.querySelector('.slvz-timeline-studio');
+        if (!root) return;
+        adoptScopeAttr();
+        buildPalette();
         bindDom();
         bindEvents();
         load();
         if (!state.canvasZoom) state.canvasZoom = 1;
         if (!state.canvasPan) state.canvasPan = { x: 0, y: 0 };
-        document.getElementById('durationInput').value = state.duration;
-        document.getElementById('stagePreset').value = state.stage.preset || 'custom';
-        document.getElementById('stageW').value = state.stage.width;
-        document.getElementById('stageH').value = state.stage.height;
+        $('durationInput').value = state.duration;
+        state.stage.width = clampStage(state.stage.width, 854);
+        state.stage.height = clampStage(state.stage.height, 480);
+        $('stageW').value = state.stage.width;
+        $('stageH').value = state.stage.height;
         zoomLabelEl.textContent = Math.round(state.canvasZoom * 100) + '%';
-        document.getElementById('playBtn').classList.remove('playing', 'paused');
-        document.getElementById('playBtn').classList.add(state.playing ? 'playing' : 'paused');
+        $('playBtn').classList.remove('playing', 'paused');
+        $('playBtn').classList.add(state.playing ? 'playing' : 'paused');
         renderAll();
+        requestAnimationFrame(fit);
+        window.addEventListener('resize', fit);
     }
 
-    return { addElement, init };
+    return { addElement, init, fit };
 })();

@@ -1,112 +1,99 @@
 ﻿@page "/timeline"
 <PageTitle>SLVZ UI | Timeline studio</PageTitle>
 
-<main>
+<main class="slvz-timeline-studio">
 
-    <div id="topbar">
-        <h1>🎛️ Timeline Studio</h1>
+    <header id="topbar" class="slvz-card default">
+        <button class="slvz-button primary" id="addBtn">+ Add Element</button>
         <div class="sep"></div>
-        <button class="btn primary" id="addBtn">+ Add Element</button>
-        <div class="sep"></div>
-        <button class="btn icon paused" id="playBtn" title="Play"></button>
+        <button class="slvz-button default icon paused" id="playBtn" title="Play/Pause"></button>
         <span id="timeLabel">0 / 5000ms</span>
         <div class="sep"></div>
         <div id="durationField">
             Timeline length
-            <input type="number" id="durationInput" value="5000" step="500" min="500">
+            <input class="slvz-textbox" type="number" id="durationInput" value="5000" step="500" min="500">
             ms
         </div>
         <div class="sep"></div>
         <div id="stageField">
             Canvas size
-            <select id="stagePreset">
-                <option value="480p">480p</option>
-                <option value="720p">720p</option>
-                <option value="1080p">1080p</option>
-                <option value="custom">Custom</option>
-            </select>
-            <input type="number" id="stageW" style="width:56px" min="10">
+            <input class="slvz-textbox" type="number" id="stageW" min="10" max="1500">
             ×
-            <input type="number" id="stageH" style="width:56px" min="10">
+            <input class="slvz-textbox" type="number" id="stageH" min="10" max="1500">
             px
         </div>
         <div class="sep"></div>
         <div id="zoomField">
             Zoom
-            <button class="btn icon" id="zoomOutBtn" style="width:26px;height:26px;">−</button>
+            <button class="slvz-button default mini" id="zoomOutBtn">−</button>
             <span id="zoomLabel">100%</span>
-            <button class="btn icon" id="zoomInBtn" style="width:26px;height:26px;">+</button>
-            <button class="btn" id="zoomResetBtn" style="padding:5px 8px;">Reset</button>
+            <button class="slvz-button default mini" id="zoomInBtn">+</button>
+            <button class="slvz-button pale" id="zoomResetBtn" style="height:28px;padding:0 10px;">Reset</button>
         </div>
         <div class="spacer"></div>
-        <button class="btn" id="exportBtn">Export HTML/CSS</button>
-    </div>
+        <button class="slvz-button default" id="exportBtn">Export</button>
+    </header>
 
-    <div id="main">
-        <div id="rightPanel">
+    <div id="stageRow">
+        <aside id="rightPanel" class="slvz-card default">
             <h2>Elements</h2>
             <div id="elList"></div>
             <div id="addTrackBox">
-                <select id="trackSelect"></select>
-                <button class="btn" id="addTrackBtn" style="width:100%;justify-content:center;">+ Add animated property</button>
+                <div id="trackSelect" data-dir="up"></div>
+                <button class="slvz-button pale" id="addTrackBtn">+ Add animated property</button>
             </div>
-        </div>
+        </aside>
         <div id="canvasWrap">
             <div id="canvas"><div id="guides"></div></div>
-            <div id="inspector">
+            <div id="inspector" class="slvz-card default">
                 <h3>Keyframe</h3>
-                <div class="row"><label>Time</label><input type="number" id="kfTime" step="10"></div>
-                <div class="row"><label>Value</label><input type="number" id="kfValueNum" step="1"></div>
+                <div class="row"><label>Time</label><input class="slvz-textbox" type="number" id="kfTime" step="10"></div>
+                <div class="row"><label>Value</label><input class="slvz-textbox" type="number" id="kfValueNum" step="1"></div>
                 <div class="row" id="kfColorRow" style="display:none;"><label>Value</label><input type="color" id="kfValueColor"></div>
                 <div class="row">
-                    <label>easing</label>
-                    <select id="kfEasing">
-                        <option value="linear">linear</option>
-                        <option value="ease">ease</option>
-                        <option value="ease-in">ease-in</option>
-                        <option value="ease-out">ease-out</option>
-                        <option value="ease-in-out">ease-in-out</option>
-                        <option value="custom">Custom (cubic-bezier)</option>
-                    </select>
+                    <label>Easing</label>
+                    <div id="kfEasing" data-dir="up"></div>
                 </div>
                 <div class="row" id="kfBezierRow" style="display:none;">
-                    <label>bezier</label>
-                    <input type="number" id="bz1" step="0.05" style="width:40px" placeholder="x1">
-                    <input type="number" id="bz2" step="0.05" style="width:40px" placeholder="y1">
-                    <input type="number" id="bz3" step="0.05" style="width:40px" placeholder="x2">
-                    <input type="number" id="bz4" step="0.05" style="width:40px" placeholder="y2">
+                    <label>Bezier</label>
+                    <input class="slvz-textbox" type="number" id="bz1" step="0.05" style="width:40px" placeholder="x1">
+                    <input class="slvz-textbox" type="number" id="bz2" step="0.05" style="width:40px" placeholder="y1">
+                    <input class="slvz-textbox" type="number" id="bz3" step="0.05" style="width:40px" placeholder="x2">
+                    <input class="slvz-textbox" type="number" id="bz4" step="0.05" style="width:40px" placeholder="y2">
                 </div>
-                <button class="btn" id="deleteKfBtn" style="width:100%;justify-content:center;color:var(--danger);">Delete Keyframe</button>
+                <button class="slvz-button default" id="deleteKfBtn">Delete Keyframe</button>
             </div>
         </div>
     </div>
 
-    <div id="timelineWrap">
+    <section id="timelineWrap" class="slvz-card default">
         <div id="timelineHead">
-            <span class="hint" style="padding:0;">Drag an element to move it, top handle to rotate, bottom handle to scale, corner handle to resize — hold Shift to snap (10px / 5°), hold Alt while dragging a keyframe to duplicate it</span>
+            <span class="hint">Drag an element to move it, top handle to rotate, bottom handle to scale, corner handle to resize — hold Shift to snap (10px / 5°), hold Alt while dragging a keyframe to duplicate it</span>
         </div>
         <div id="timelineBody">
             <div id="trackLabels"></div>
             <div id="tracksScroll">
                 <div id="timelineScrollInner">
+                    <div id="playheadHead"><i></i></div>
                     <div id="ruler"></div>
                     <div id="tracksArea"></div>
                     <div id="playhead"></div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div id="modalBg">
-        <div id="modal">
-            <header><h3>HTML + CSS Export</h3><button class="btn icon" id="modalCloseBtn">✕</button></header>
+    <div id="modalBg" class="slvz-dialog">
+        <div id="modal" class="slvz-dialog-body">
+            <header><h3>Export</h3><button class="slvz-button default mini" id="modalCloseBtn">✕</button></header>
             <pre id="modalCode"></pre>
             <footer>
-                <span class="hint" id="exportNote" style="padding:6px 0;"></span>
+                <span class="hint" id="exportNote"></span>
                 <div style="flex:1"></div>
-                <button class="btn primary" id="copyBtn">Copy code</button>
+                <button class="slvz-button primary" id="copyBtn">Copy code</button>
             </footer>
         </div>
     </div>
-      
+
 </main>
+
