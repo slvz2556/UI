@@ -1,0 +1,24 @@
+.slvz-dialog-body
+{
+    width:calc(100% - 40px);
+    max-width: 350px;
+    padding:10px;
+    border-radius:10px;
+    display:flex;
+    gap:15px;
+    flex-direction:column;
+}
+
+.slvz-dialog-body span{
+    font-family:var(--font-light);
+    color:var(--font-light-color);
+    font-size:var(--font-light-size);
+}
+
+.slvz-dialog-body button{
+    width:120px;
+    margin-top:30px;
+    height:35px;
+    font-size:var(--font-light-size);
+    font-family:var(--font-light);
+}

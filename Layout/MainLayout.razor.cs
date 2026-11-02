@@ -67,6 +67,7 @@ public partial class MainLayout : IDisposable
         MenuItems.Add(new MenuItem { Name = "Textbox", Location = "textbox", Selected = false });
         MenuItems.Add(new MenuItem { Name = "Trackbar", Location = "trackbar", Selected = false });
         MenuItems.Add(new MenuItem { Name = "Menu", Location = "menu", Selected = false });
+        MenuItems.Add(new MenuItem { Name = "Dialog", Location = "dialog", Selected = false });
     }
 
 }

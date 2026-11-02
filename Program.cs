@@ -3,6 +3,7 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using UI.Components.Shared;
+using UI.Components.Templates.Dialog;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -11,6 +12,7 @@ builder.Services.AddBlazoredLocalStorage();
 
 
 builder.Services.AddSingleton<IExportCode>();
+builder.Services.AddSingleton<ISampleDialog>();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
