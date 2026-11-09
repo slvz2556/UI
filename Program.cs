@@ -3,7 +3,7 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using UI.Components.Shared;
-using UI.Components.Templates.Dialog;
+using UI.Components.Templates.Dialogs;
 
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);

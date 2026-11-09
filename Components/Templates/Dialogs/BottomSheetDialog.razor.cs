@@ -1,4 +1,4 @@
-namespace UI.Components.Templates.Dialog;
+namespace UI.Components.Templates.Dialogs;
 
 public partial class BottomSheetDialog : IDisposable
 {

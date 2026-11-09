@@ -1,8 +1,8 @@
 using Microsoft.JSInterop;
 
-namespace UI.Components.Templates.Dialog;
+namespace UI.Components.Templates.Dialogs;
 
-public partial class Dialog
+public partial class Dialogs
 {
     protected override async void OnAfterRender(bool firstRender)
     {
