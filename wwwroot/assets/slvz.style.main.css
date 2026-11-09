@@ -401,3 +401,73 @@
     box-shadow: var(--dialog-shadow);
     background: var(--dialog-background);
 }
+
+.slvz-bottomsheet-dialog {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99999;
+    background: var(--dialog-container-background);
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    contain: strict;
+}
+.slvz-bottomsheet-dialog-empty-space {
+    width: 100%;
+    position: relative;
+    flex: 1;
+}
+.slvz-bottomsheet-dialog-body {
+    position: relative;
+    display: flex;
+    box-shadow: var(--dialog-shadow);
+    background: var(--dialog-background);
+    flex-direction: column;
+    align-self: end;
+    height: fit-content;
+    max-height: 730px;
+    min-height: 100px;
+    transition: 0 !important;
+    width: 100%;
+    max-width: 550px;
+    align-self:center;
+    overflow: hidden;
+    opacity: 1;
+    will-change: transform;
+    transform: translateY(0);
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    overflow: hidden !important;
+    animation-name: bottomsheet-dialog-popup-animation;
+    animation-duration: .2s;
+    animation-direction: normal;
+}
+@keyframes bottomsheet-dialog-popup-animation {
+    from {
+        opacity: .5;
+        transform: translateY(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.slvz-drag-handle {
+    height: 30px;
+    width: 100%;
+    touch-action: none;
+    position: relative;
+    display: grid;
+}
+.slvz-drag-handle span {
+    justify-self:center;
+    align-self:center;
+    position: absolute;
+    height: 10px;
+    width: 40px;
+    border-radius: 5px;
+    background-color:var(--btn-pale-background);
+    box-shadow:var(--btn-pale-shadow);
+}

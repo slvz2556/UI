@@ -33,3 +33,50 @@ function OpenDropList(el) {
         });
     }, 50);
 }
+
+
+
+
+
+
+//================= Bottom sheet dialog ==============================
+let dialog;
+let _dialog_moving = false;
+let _dialog_startY = 0, _dialog_delta;
+const onDialogMove = e => {
+    if (!_dialog_moving)
+        return;
+
+    const delta = Math.min(1400, Math.max(0, e.clientY - _dialog_startY));
+    dialog.style.transform = 'translateY(' + delta + 'px)';
+    _dialog_delta = delta;
+};
+const onDialogMoveEnd = e => {
+    if (!_dialog_moving || !dialog)
+        return;
+
+    if (_dialog_delta >= 100) {
+        dialog.querySelector('.btn-dialog-done').click();
+    } else {
+
+        dialog.style.transition = 'transform 0.3s ease';
+
+        dialog.style.transform = 'translateY(0)';
+
+        setTimeout(() => dialog.style.transition = '', 300);
+
+    }
+
+    _dialog_moving = false;
+};
+function onDialogDragStart(e, el) {
+    dialog = el.parentElement;
+    _dialog_startY = e.clientY;
+    _dialog_delta = 0;
+    _dialog_moving = true;
+    dialog.style.transition = '';
+}
+window.addEventListener("pointermove", onDialogMove);
+window.addEventListener("pointerup", onDialogMoveEnd);
+window.addEventListener("pointercancel", onDialogMoveEnd);
+

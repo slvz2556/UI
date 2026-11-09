@@ -12,7 +12,8 @@ builder.Services.AddBlazoredLocalStorage();
 
 
 builder.Services.AddSingleton<IExportCode>();
-builder.Services.AddSingleton<ISampleDialog>();
+builder.Services.AddSingleton<IDefaultDialog>();
+builder.Services.AddSingleton<IBottomSheetDialog>();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 

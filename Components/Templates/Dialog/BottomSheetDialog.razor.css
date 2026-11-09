@@ -1,0 +1,20 @@
+.slvz-bottomsheet-dialog-body {
+    gap: 15px;
+    padding: 0 0 20px 0;
+}
+
+.text {
+    margin-left:10px;
+    font-family: var(--font-light);
+    color: var(--font-light-color);
+    font-size: var(--font-light-size);
+}
+
+.slvz-bottomsheet-dialog-body button {
+    width: 120px;
+    margin-left:10px;
+    margin-top: 30px;
+    height: 35px;
+    font-size: var(--font-light-size);
+    font-family: var(--font-light);
+}

@@ -1,0 +1,17 @@
+﻿@if (bottomSheetDialog.Visible)
+{
+    <dialog class="slvz-bottomsheet-dialog">
+
+        <div class="slvz-bottomsheet-dialog-empty-space" @onclick="bottomSheetDialog.CloseDialog"></div>
+
+        <div class="slvz-bottomsheet-dialog-body">
+
+            <div class="slvz-drag-handle" onpointerdown="onDialogDragStart(event, this)"><span></span></div>
+
+            <span class="text">Sample bottom sheet dialog!</span>
+
+            <button class="slvz-button default btn-dialog-done" @onclick="bottomSheetDialog.CloseDialog">Close</button>
+
+        </div>
+    </dialog>
+}

@@ -1,21 +1,21 @@
 namespace UI.Components.Templates.Dialog;
 
-public partial class SampleDialog : IDisposable
+public partial class BottomSheetDialog : IDisposable
 {
     public void Dispose()
     {
-        sampleDialog.OnChange -= SampleDialog_OnChange;
+        bottomSheetDialog.OnChange -= SampleDialog_OnChange;
     }
 
     protected override void OnInitialized()
     {
-        sampleDialog.OnChange += SampleDialog_OnChange;
+        bottomSheetDialog.OnChange += SampleDialog_OnChange;
     }
 
     private async void SampleDialog_OnChange(object? sender, EventArgs e)
         => await InvokeAsync(StateHasChanged);
 }
-public partial class ISampleDialog
+public partial class IBottomSheetDialog
 {
     public event EventHandler OnChange = delegate { };
     public bool Visible = false;

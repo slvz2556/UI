@@ -5,14 +5,24 @@
 
 <main>
 
-    <h1 style="font-size:25px;" class="title">Dialog</h1>
+    <h1 style="font-size:25px;" class="title">Dialogs</h1>
     <p class="description">All dialogs with different styles</p>
 
 
-    <h1 style="font-size:25px; margin-top:40px; " class="title">Dialog</h1>
-    <button class="btn slvz-button default" @onclick="sampleDialog.OpenDialog">Open dialog</button>
-    <CodeBlock Language="razor" Code="@dialog"/>
+    <h1 style="font-size:25px; margin-top:40px; " class="title">Default Dialog</h1>
+    <button class="btn slvz-button default" @onclick="defaultDialog.OpenDialog">Open dialog</button>
+    <CodeBlock Language="razor" Code="@defaultDialogRazor" />
+    <CodeBlock Language="csharp" Code="@defaultDialogCsharp1" />
+    <CodeBlock Language="csharp" Code="@defaultDialogCsharp2" />
+    <CodeBlock Language="razor" Code="@defaultDialogInject" />
 
+
+    <h1 style="font-size:25px; margin-top:40px; " class="title">Bottom sheet dialog</h1>
+    <button class="btn slvz-button default" @onclick="bottomSheetDialog.OpenDialog">Open dialog</button>
+    <CodeBlock Language="razor" Code="@bottomSheetDialogRazor" />
+    <CodeBlock Language="csharp" Code="@bottomSheetDialogCsharp1" />
+    <CodeBlock Language="csharp" Code="@bottomSheetDialogCsharp2" />
+    <CodeBlock Language="razor" Code="@bottomSheetDialogInject" />
 
 </main>
 
