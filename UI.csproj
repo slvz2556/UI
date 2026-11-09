@@ -18,4 +18,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.14" PrivateAssets="all" />
   </ItemGroup>
 
+
+    <Target Name="RemovePdbFromPublish" AfterTargets="ComputeResolvedFilesToPublishList">
+	    <ItemGroup>
+		    <ResolvedFileToPublish Remove="@(ResolvedFileToPublish)" Condition="'%(Extension)' == '.pdb'" />
+	    </ItemGroup>
+    </Target>
+
 </Project>

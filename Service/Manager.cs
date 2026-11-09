@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-using UI.Models.Icons;
 
 namespace UI.Service;
 
@@ -7,21 +6,21 @@ public static class Manager
 {
     public static void Initialize()
     {
+
         List<IconModel> Icons = new List<IconModel>();
 
-#if DEBUG
-        var directories = Directory.GetDirectories(Path.Combine(AppContext.BaseDirectory.Split(@"\bin\")[0]
+        var baseDirectory = @"C:\Users\SLVZ\OneDrive\SLVZ\Web\UI";
+
+        var directories = Directory.GetDirectories(Path.Combine(baseDirectory
             , "wwwroot", "icons"));
-#else
-        var directories = Directory.GetDirectories(Path.Combine(AppContext.BaseDirectory, "wwwroot", "icons"));
-#endif
+
 
         int index = 0;
 
         foreach (var directory in directories)
         {
             var info = new DirectoryInfo(directory);
-            var files = info.GetFiles();
+            var files = info.GetFiles();            
 
             var icon = new IconModel
             {
@@ -32,18 +31,32 @@ public static class Manager
             };
 
             foreach (var f in files)
+            {
+                if (f.Name == "desktop.ini")
+                    continue;
+
                 icon.Files.Add(f.Name);
+            }
 
             Icons.Add(icon);
         }
 
-#if DEBUG
-        File.WriteAllText(Path.Combine(AppContext.BaseDirectory.Split(@"\bin\")[0], "wwwroot", "icons.json"),
+        File.WriteAllText(Path.Combine(baseDirectory, "wwwroot", "icons.json"),
             JsonSerializer.Serialize<List<IconModel>>(Icons));
-#else
-        File.WriteAllText(Path.Combine(AppContext.BaseDirectory, "wwwroot", "icons.json"), 
-        JsonSerializer.Serialize<List<IconModel>>(Icons)); 
-#endif
 
+
+    }
+    class FileModel
+    {
+        public string? Name { get; set; }
+        public bool Selected { get; set; } = false;
+    }
+
+    class IconModel
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+        public string? FilePreview { get; set; }
+        public List<string> Files { get; set; } = new List<string>();
     }
 }
